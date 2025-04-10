@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Modal, Pressable } from "react-native";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
-import GeneralHeader from "../../components/general_header";
+import GeneralHeader from "../../components/general-header";
 import Branch from "../../components/my-appointments/branch";
 import AppointmentDetailActions from "../../components/my-appointments/appointment-detail/appointment-detail-actions";
 import ChangeNotice from "../../components/my-appointments/appointment-detail/change-notice";

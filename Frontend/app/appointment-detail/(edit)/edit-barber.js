@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import ChangeNotice from "../../../components/my-appointments/appointment-detail/change-notice";
-import GeneralHeader from "../../../components/general_header";
+import GeneralHeader from "../../../components/general-header";
 import ConfirmEdit from "../../../components/my-appointments/appointment-detail/edit/confirm-edit";
 
 export default function EditService() {

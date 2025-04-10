@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { View, Text, TouchableOpacity } from "react-native";
-import GeneralHeader from "../../components/general_header";
+import GeneralHeader from "../../components/general-header";
 
 export default function Register() {
   const router = useRouter();
