@@ -1,42 +1,11 @@
-const express = require('express');
-const db = require('../config/database');
+const express = require("express");
 const router = express.Router();
+const controller = require("../controllers/employeesController");
 
-router.get('/', (req, res) => {
-  db.query('SELECT * FROM Employees', (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
-});
-
-router.get('/:id', (req, res) => {
-  db.query('SELECT * FROM Employees WHERE idEmployee = ?', [req.params.id], (err, results) => {
-    if (err) throw err;
-    res.json(results[0]);
-  });
-});
-
-router.post('/', (req, res) => {
-  const { Name, Email, Phone, Position, Profile, Description } = req.body;
-  db.query('INSERT INTO Employees (Name, Email, Phone, Position, Profile, Description) VALUES (?, ?, ?, ?, ?, ?)', [Name, Email, Phone, Position, Profile, Description], (err, result) => {
-    if (err) throw err;
-    res.json({ id: result.insertId, ...req.body });
-  });
-});
-
-router.put('/:id', (req, res) => {
-  const { Name, Email, Phone, Position, Profile, Description } = req.body;
-  db.query('UPDATE Employees SET Name=?, Email=?, Phone=?, Position=?, Profile=?, Description=? WHERE idEmployee=?', [Name, Email, Phone, Position, Profile, Description, req.params.id], (err) => {
-    if (err) throw err;
-    res.json({ message: 'Empleado actualizado' });
-  });
-});
-
-router.delete('/:id', (req, res) => {
-  db.query('DELETE FROM Employees WHERE idEmployee=?', [req.params.id], (err) => {
-    if (err) throw err;
-    res.json({ message: 'Empleado eliminado' });
-  });
-});
+router.get("/", controller.getAllEmployees);
+router.get("/:id", controller.getEmployeeById);
+router.post("/", controller.createEmployee);
+router.put("/:id", controller.updateEmployee);
+router.delete("/:id", controller.deleteEmployee);
 
 module.exports = router;
