@@ -1,4 +1,4 @@
-const db = require("../db");
+const db = require('../config/database');
 
 const Appointment = {
   getAll: (callback) => {
