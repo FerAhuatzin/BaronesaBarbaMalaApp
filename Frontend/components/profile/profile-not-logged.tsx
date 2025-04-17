@@ -37,15 +37,15 @@ const styles = StyleSheet.create({
     width: "90%",
     backgroundColor: "white",
     alignSelf: "center",
-    paddingTop: 30,
+    paddingTop: 20,
   },
   profitsContainer: {
-    paddingVertical: 40,
+    paddingVertical: 20,
   },
   profitContainer: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 20,
   },
   subtitle: {
     fontSize: fontSizes.subTitles,
