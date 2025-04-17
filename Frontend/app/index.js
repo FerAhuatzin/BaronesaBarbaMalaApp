@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ImageBackground, SafeAreaView, Image } from "react-native";
+import { View, Text, TouchableOpacity, ImageBackground, SafeAreaView, Image, StatusBar } from "react-native";
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet } from "react-native";
@@ -9,36 +9,45 @@ import { Stack } from "expo-router";
 export default function Index() {
   const router = useRouter();
   return (
-    <View style={styles.container}>
+    <>
+      <StatusBar barStyle="light-content" translucent backgroundColor="transparent" />
       <Stack.Screen options={{ headerShown: false }} />
-      <ImageBackground 
-        source={require('../assets/images/SplashImage.jpg')} 
-        style={styles.container}
-      >
-        <View style={styles.overlay} />
-        <SafeAreaView style={styles.safeArea}>
-          <Text style={styles.title}>
-            Los que saben como tratar tu cabello
-          </Text>
-          <View style={styles.logoContainer}>
-            <Image source={require('../assets/images/Barbamala-logo-white.png')} style={styles.logo} />
-            <Image source={require('../assets/images/Baronesa-logo-white.png')} style={styles.logo} />
-          </View>
-          <TouchableOpacity style={styles.button} onPress={() => router.replace("/(tabs)")}>
-            <Text style={styles.buttonText}>Iniciar</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </ImageBackground>
-    </View>
+      <View style={styles.fullScreenContainer}>
+        <ImageBackground 
+          source={require('../assets/images/SplashImage.jpg')} 
+          style={styles.backgroundImage}
+        >
+          <View style={styles.overlay} />
+          <SafeAreaView style={styles.safeArea}>
+            <View style={styles.contentContainer}>
+              <Text style={styles.title}>
+                Los que saben como tratar tu cabello
+              </Text>
+              <View style={styles.logoContainer}>
+                <Image source={require('../assets/images/Barbamala-logo-white.png')} style={styles.logo} />
+                <Image source={require('../assets/images/Baronesa-logo-white.png')} style={styles.logo} />
+              </View>
+              <TouchableOpacity style={styles.button} onPress={() => router.replace("/(tabs)")}>
+                <Text style={styles.buttonText}>Iniciar</Text>
+              </TouchableOpacity>
+            </View>
+          </SafeAreaView>
+        </ImageBackground>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  fullScreenContainer: {
     flex: 1,
+    width: '100%',
+    height: '100%',
   },
-  safeArea: {
+  backgroundImage: {
     flex: 1,
+    width: '100%',
+    height: '100%',
   },
   overlay: {
     position: 'absolute',
@@ -46,6 +55,16 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'black',
     opacity: 0.8
+  },
+  safeArea: {
+    flex: 1,
+    width: '100%',
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
   },
   title: {
     fontSize: fontSizes.titles,

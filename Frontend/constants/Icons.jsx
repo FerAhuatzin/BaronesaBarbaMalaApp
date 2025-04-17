@@ -1,6 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
 
 export const CalendarIcon = (props) => (
     <Ionicons name="calendar-clear-outline" {...props}/>
@@ -32,4 +33,8 @@ export const EyeIcon = (props) => (
 
 export const EyeOffIcon = (props) => (
     <Ionicons name="eye-off" {...props} />
+)
+
+export const MapPinIcon = (props) => (
+    <Feather name="map-pin" {...props} />
 )
