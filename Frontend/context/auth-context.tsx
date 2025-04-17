@@ -31,7 +31,25 @@ const REFRESH_TOKEN_KEY = "baronesa_refresh_token";
 const CLIENT_DATA_KEY = "baronesa_client";
 
 // URL base de la API
-const API_URL = "http://localhost:3000/api";
+// Cambia esta URL a la dirección IP de tu computadora en la red local
+// Para desarrollo local, usa la IP de tu máquina en lugar de localhost
+const API_URL = "http://192.168.56.1/api";  // Reemplaza con tu IP real
+
+// Función para ayudar a depurar problemas de conexión
+const logAxiosError = (error: any) => {
+  if (error.response) {
+    // El servidor respondió con un código de estado fuera del rango 2xx
+    console.error("Error data:", error.response.data);
+    console.error("Error status:", error.response.status);
+  } else if (error.request) {
+    // La petición fue hecha pero no se recibió respuesta
+    console.error("No response received:", error.request);
+  } else {
+    // Algo ocurrió al configurar la petición que desencadenó un error
+    console.error("Error message:", error.message);
+  }
+  console.error("Error config:", error.config);
+};
 
 const AuthContext = createContext<AuthContextType>({
   isLoggedIn: false,

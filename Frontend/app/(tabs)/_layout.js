@@ -4,7 +4,7 @@ import { colors } from "../../constants/colors";
 
 export default function TabsLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: colors.tab_highlight, tabBarStyle: { height: 50 }, headerShown: false }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: colors.tab_highlight, tabBarStyle: { height: 50 } }}>
       <Tabs.Screen
         name="index"
         options={{
