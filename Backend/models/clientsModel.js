@@ -1,25 +1,56 @@
-const db = require('../config/database');
+const pool = require('../config/database');
 
 const Client = {
-  getAll: (callback) => {
-    db.query("SELECT * FROM Clients", callback);
+  getAll: async () => {
+    const [rows] = await pool.query("SELECT * FROM Clients");
+    return rows;
   },
 
-  getById: (id, callback) => {
-    db.query("SELECT * FROM Clients WHERE idClient = ?", [id], callback);
+  getById: async (id) => {
+    const [rows] = await pool.query("SELECT * FROM Clients WHERE idClient = ?", [id]);
+    return rows;
   },
 
-  create: (client, callback) => {
-    db.query("INSERT INTO Clients SET ?", client, callback);
+  create: async (client) => {
+    const [result] = await pool.query("INSERT INTO Clients SET ?", [client]);
+    return result;
   },
 
-  update: (id, client, callback) => {
-    db.query("UPDATE Clients SET ? WHERE idClient = ?", [client, id], callback);
+  update: async (id, client) => {
+    const [result] = await pool.query("UPDATE Clients SET ? WHERE idClient = ?", [client, id]);
+    return result;
   },
 
-  delete: (id, callback) => {
-    db.query("DELETE FROM Clients WHERE idClient = ?", [id], callback);
+  delete: async (id) => {
+    const [result] = await pool.query("DELETE FROM Clients WHERE idClient = ?", [id]);
+    return result;
   },
+
+  findByEmail: async (email) => {
+    const [rows] = await pool.query("SELECT * FROM Clients WHERE Email = ?", [email]);
+    return rows;
+  },
+
+  saveRefreshToken: async (clientId, refreshToken) => {
+    const [result] = await pool.query(
+      "UPDATE Clients SET refreshToken = ? WHERE idClient = ?", 
+      [refreshToken, clientId]
+    );
+    return result;
+  },
+
+  findByRefreshToken: async (refreshToken) => {
+    const [rows] = await pool.query("SELECT * FROM Clients WHERE refreshToken = ?", [refreshToken]);
+    return rows;
+  },
+
+  revokeRefreshToken: async (clientId) => {
+    const [result] = await pool.query(
+      "UPDATE Clients SET refreshToken = NULL WHERE idClient = ?", 
+      [clientId]
+    );
+    return result;
+  }
 };
 
 module.exports = Client;
