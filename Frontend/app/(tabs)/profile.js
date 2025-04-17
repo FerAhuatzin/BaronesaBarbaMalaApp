@@ -5,7 +5,7 @@ import ProfileLoggedIn from "../../components/profile/profile-logged-in";
 import { useLocalSearchParams } from "expo-router";
 import TabsHeader from "../../components/tabs-header";
 import { Stack } from "expo-router";
-
+import { StyleSheet } from "react-native";
 export default function Profile() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -15,9 +15,8 @@ export default function Profile() {
       setIsLoggedIn(true);
     }
   }, [logged]);
-
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={styles.container}>
       <Stack.Screen options={{ header: () => <TabsHeader title="Perfil" /> }} />
       {isLoggedIn ? (
         <ProfileLoggedIn handleLogout={() => setIsLoggedIn(false)} />
@@ -27,3 +26,10 @@ export default function Profile() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+});

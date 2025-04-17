@@ -33,4 +33,3 @@ export const EyeIcon = (props) => (
 export const EyeOffIcon = (props) => (
     <Ionicons name="eye-off" {...props} />
 )
-

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 interface Client {
   idClient: number;
@@ -33,7 +33,7 @@ const CLIENT_DATA_KEY = "baronesa_client";
 // URL base de la API
 // Cambia esta URL a la dirección IP de tu computadora en la red local
 // Para desarrollo local, usa la IP de tu máquina en lugar de localhost
-const API_URL = "http://192.168.56.1/api";  // Reemplaza con tu IP real
+const API_URL = "http://10.0.2.2:3000/api";  // Reemplaza con tu IP real
 
 // Función para ayudar a depurar problemas de conexión
 const logAxiosError = (error: any) => {
@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Verifica si el token está por expirar (menos de 5 minutos)
   const isTokenExpiring = (token: string): boolean => {
     try {
-      const decoded = jwt_decode<TokenPayload>(token);
+      const decoded = jwtDecode<TokenPayload>(token);
       return decoded.exp * 1000 < Date.now() + 5 * 60 * 1000;
     } catch {
       return true;

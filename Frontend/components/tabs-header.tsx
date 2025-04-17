@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { Text, View } from "react-native";
 import { StyleSheet } from "react-native";
 import { fontSizes } from "../constants/font-sizes";
@@ -8,7 +7,6 @@ interface Props {
 }
 
 export default function TabsHeader({ title }: Props) {
-  const router = useRouter();
   return (
     <View style={styles.header}>
       <View style={styles.container}>

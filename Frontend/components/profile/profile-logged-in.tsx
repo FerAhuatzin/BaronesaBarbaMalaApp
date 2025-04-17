@@ -29,12 +29,13 @@ const styles = StyleSheet.create({
     width: "90%",
     backgroundColor: "white",
     alignSelf: "center",
-    paddingTop: 30,
+    paddingTop: 20,
   },
   subtitle: {
     fontSize: fontSizes.subTitles,
   },
   loginButtonText: {
+    paddingVertical: 20,
     fontSize: fontSizes.subTitles,
     textDecorationLine: "underline",
   },

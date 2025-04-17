@@ -90,7 +90,6 @@ export default function Register() {
         >
           <Text style={styles.registerButtonText}>Registrarse</Text>
         </TouchableOpacity>
-
       </View>
     </SafeAreaView>
   );
