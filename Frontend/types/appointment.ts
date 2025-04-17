@@ -9,3 +9,15 @@ export interface AppointmentDetails {
   status: 'pending' | 'completed' | 'cancelled';
   price: number;
 } 
+
+export interface BranchDetails {
+  id: string;
+  brand: string;
+  name: string;
+  longitude: number;
+  latitude: number;
+  image: string;
+
+}
+
+
