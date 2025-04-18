@@ -13,7 +13,9 @@ export default function AppointmentDetail() {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [appointment, setAppointment] = useState(null);
   useEffect(() => {
-    const appointment_search = mockAppointments.find(appointment => appointment.id === appointment_id);
+    const appointment_search = mockAppointments.find(
+      (appointment) => appointment.id === appointment_id
+    );
     if (appointment_search) {
       setAppointment(appointment_search);
     } else {
@@ -22,10 +24,9 @@ export default function AppointmentDetail() {
   }, [appointment_id]);
 
   return (
-
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <GeneralHeaderTitle title="Detalle de cita" />
-      
+
       <AppointmentDetailBody appointment={appointment} />
       {appointment && appointment.status === "pending" && (
         <AppointmentDetailActions onCancel={() => setShowCancelModal(true)} />
@@ -33,7 +34,11 @@ export default function AppointmentDetail() {
 
       {showCancelModal && (
         <View style={styles.container_canceling}>
-          <ChangeNotice onChange={() => setShowCancelModal(false)} message="¿Seguro que quieres cancelar tu cita?" button_message="Cancelar cita"/>
+          <ChangeNotice
+            onChange={() => setShowCancelModal(false)}
+            message="¿Seguro que quieres cancelar tu cita?"
+            button_message="Cancelar cita"
+          />
         </View>
       )}
     </View>
