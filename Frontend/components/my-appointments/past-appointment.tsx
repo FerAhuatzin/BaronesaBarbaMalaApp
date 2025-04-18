@@ -12,12 +12,8 @@ interface PastAppointmentProps {
 export default function PastAppointment({ appointment }: PastAppointmentProps) {
   const router = useRouter();
   return (
-    <TouchableOpacity style={styles.container} onPress={() => router.push("/appointment-detail")}>
+    <TouchableOpacity style={styles.container} onPress={() => router.push(`/appointment-detail/${appointment.id}`)}>
       <View style={styles.contentContainer}>
-        <Image 
-          source={appointment.branchImage ? { uri: appointment.branchImage } : require('../../assets/images/SplashImage.jpg')} 
-          style={styles.branchImage} 
-        />
         
         <View style={styles.rightContainer}>
           <View style={styles.infoContainer}>
@@ -60,7 +56,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   contentContainer: {
-    flexDirection: 'row',
+
     height: 140,
   },
   branchImage: {
