@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   branchName: {
-    fontSize: fontSizes.body,
+    fontSize: fontSizes.subTitles,
     width: "58%",
   },
   locationButton: {

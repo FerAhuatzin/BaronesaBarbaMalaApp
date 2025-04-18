@@ -8,6 +8,8 @@ export interface AppointmentDetails {
   stylist: string;
   status: 'pending' | 'completed' | 'cancelled';
   price: number;
+  latitude: number;
+  longitude: number;
 } 
 
 export interface BranchDetails {

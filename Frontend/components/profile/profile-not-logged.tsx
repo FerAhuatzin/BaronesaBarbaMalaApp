@@ -13,16 +13,21 @@ export default function ProfileNotLoggedIn() {
       <View style={styles.profitsContainer}>
         <View style={styles.profitContainer}>
           <CalendarIcon size={40} />
+          <View style={styles.profitTextContainer}>
           <Text style={styles.profitText}>
             Registro de tus datos de forma automática al reservar.
           </Text>
+          </View>
         </View>
         <View style={styles.profitContainer}>
           <GiftIcon size={40} />
+          <View style={styles.profitTextContainer}>
           <Text style={styles.profitText}>
             Con cada cita atendida gana el 10% de su costo en puntos para pagar
             tus siguientes citas.
           </Text>
+          </View>
+          
         </View>
       </View>
       <TouchableOpacity style={styles.loginButton} onPress={() => router.push("/login")}>
@@ -35,17 +40,19 @@ export default function ProfileNotLoggedIn() {
 const styles = StyleSheet.create({
   container: {
     width: "90%",
-    backgroundColor: "white",
     alignSelf: "center",
+    backgroundColor: "white",
     paddingTop: 20,
+  },
+  profitTextContainer: {
+    flex: 1,
   },
   profitsContainer: {
     paddingVertical: 20,
   },
   profitContainer: {
     flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 20,
+    paddingVertical: 15,
   },
   subtitle: {
     fontSize: fontSizes.subTitles,

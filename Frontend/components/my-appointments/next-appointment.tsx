@@ -12,7 +12,7 @@ interface NextAppointmentProps {
 export default function NextAppointment({ appointment }: NextAppointmentProps) {
   const router = useRouter();
   return (
-    <TouchableOpacity style={styles.container} onPress={() => router.push("/appointment-detail")}>
+    <TouchableOpacity style={styles.container} onPress={() => router.push(`/appointment-detail/${appointment.id}`)}>
       <Image 
         source={appointment.branchImage ? { uri: appointment.branchImage } : require('../../assets/images/SplashImage.jpg')} 
         style={styles.branchImage} 

@@ -10,7 +10,9 @@ export const mockAppointments: AppointmentDetails[] = [
     service: "Corte y barba",
     stylist: "Juan Pérez",
     status: "pending",
-    price: 280
+    price: 280,
+    latitude: 19.04014810319887,
+    longitude: -98.22719631779105
   },
   {
     id: "2",
@@ -21,7 +23,9 @@ export const mockAppointments: AppointmentDetails[] = [
     service: "Corte estudiante",
     stylist: "María Rodríguez",
     status: "completed",
-    price: 210
+    price: 210,
+    latitude: 19.04014810319887,
+    longitude: -98.22719631779105
   },
   {
     id: "3",
@@ -32,7 +36,9 @@ export const mockAppointments: AppointmentDetails[] = [
     service: "Tinte y corte",
     stylist: "Ana García",
     status: "completed", 
-    price: 450
+    price: 450,
+    latitude: 19.04014810319887,
+    longitude: -98.22719631779105
   },
   {
     id: "4",
@@ -43,7 +49,9 @@ export const mockAppointments: AppointmentDetails[] = [
     service: "Corte ejecutivo",
     stylist: "Carlos Ruiz",
     status: "completed",
-    price: 250
+    price: 250,
+    latitude: 19.04014810319887,
+    longitude: -98.22719631779105
   },
   {
     id: "5", 
@@ -54,6 +62,8 @@ export const mockAppointments: AppointmentDetails[] = [
     service: "Tratamiento capilar",
     stylist: "Laura Méndez",
     status: "cancelled",
-    price: 380
+    price: 380,
+    latitude: 19.04014810319887,
+    longitude: -98.22719631779105
   }
 ];
