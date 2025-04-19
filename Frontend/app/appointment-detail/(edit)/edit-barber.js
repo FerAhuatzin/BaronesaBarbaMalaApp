@@ -1,25 +1,38 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import ChangeNotice from "../../../components/my-appointments/appointment-detail/change-notice";
-import GeneralHeader from "../../../components/general-header";
+import GeneralHeaderTitle from "../../../components/general-header-title";
 import ConfirmEdit from "../../../components/my-appointments/appointment-detail/edit/confirm-edit";
-
-export default function EditService() {
+import AssignBarberBody from "../../../components/schedule/assign-barber/assign-barber-body";
+import { fontSizes } from "../../../constants/font-sizes";
+export default function EditBarber() {
   const [showConfirmModal, setShowConfrimModal] = useState(false);
+  const [selectedBarber, setSelectedBarber] = useState(null);
+  
+  const handleConfirmChanges = () => {
+    // Aquí guardaríamos el barbero seleccionado para la edición
+    setShowConfrimModal(true);
+  };
+  
+  const handleChangeBarber = () => {
+    // Aquí implementaríamos la lógica para guardar los cambios del barbero
+    // y redireccionar al detalle de la cita
+    setShowConfrimModal(false);
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <GeneralHeader />
-      <Text style={{ fontSize: 24, fontWeight: "bold", margin: 20 }}>
-        Editar especialista
+      <GeneralHeaderTitle title="Profesional" />
+      <Text style={styles.title}>
+        Selecciona tu nuevo especialista.
       </Text>
-      <ConfirmEdit onConfirmChanges={() => setShowConfrimModal(true)} />
+      <AssignBarberBody />
+      <ConfirmEdit onConfirmChanges={handleConfirmChanges} />
 
       {showConfirmModal && (
         <View style={styles.container_canceling}>
           <ChangeNotice
-            onChange={() => setShowConfrimModal(false)}
+            onChange={handleChangeBarber}
             message="¿Seguro que quieres cambiar tu especialista?"
             button_message="Cambiar especialista"
           />
@@ -39,5 +52,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
+  },
+  title: {
+    fontSize: fontSizes.largeSubTitles,
+    width: "90%",
+    alignSelf: "center",
+    marginVertical: 20,
   },
 });

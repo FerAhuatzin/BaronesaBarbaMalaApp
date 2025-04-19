@@ -1,25 +1,47 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import ChangeNotice from "../../../components/my-appointments/appointment-detail/change-notice";
-import GeneralHeader from "../../../components/general-header";
+import GeneralHeaderTitle from "../../../components/general-header-title";
 import ConfirmEdit from "../../../components/my-appointments/appointment-detail/edit/confirm-edit";
-
+import { useState } from "react";
+import ServiceOptions from "../../../components/schedule/assign-service/service-options";
+import { mockServices } from "../../../components/schedule/assign-service/mock-data";
+import { fontSizes } from "../../../constants/font-sizes";
 export default function EditService() {
   const [showConfirmModal, setShowConfrimModal] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [selectedServices, setSelectedServices] = useState([]);
+  
+  const handleUpdateTotal = (newTotal) => {
+    setTotal(newTotal);
+  };
+  
+  const handleConfirmChanges = () => {
+    // Aquí guardaríamos los servicios seleccionados para la edición
+    setShowConfrimModal(true);
+  };
+  
+  const handleChangeService = () => {
+    // Aquí implementaríamos la lógica para guardar los cambios
+    // y redireccionar al detalle de la cita
+    setShowConfrimModal(false);
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <GeneralHeader />
-      <Text style={{ fontSize: 24, fontWeight: "bold", margin: 20 }}>
-        Editar Servicio
+      <GeneralHeaderTitle title="Servicio" />
+      <Text style={styles.title}>
+        Cambia tu servicio.
       </Text>
-      <ConfirmEdit onConfirmChanges={() => setShowConfrimModal(true)} />
+      <ServiceOptions 
+        services={mockServices} 
+        onUpdateTotal={handleUpdateTotal} 
+      />
+      <ConfirmEdit onConfirmChanges={handleConfirmChanges} />
 
       {showConfirmModal && (
         <View style={styles.container_canceling}>
           <ChangeNotice
-            onChange={() => setShowConfrimModal(false)}
+            onChange={handleChangeService}
             message="¿Seguro que quieres cambiar tu servicio?"
             button_message="Cambiar servicio"
           />
@@ -39,5 +61,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
+  },
+  title: {
+    fontSize: fontSizes.largeSubTitles,
+    width: "90%",
+    alignSelf: "center",
+    marginVertical: 20,
   },
 });

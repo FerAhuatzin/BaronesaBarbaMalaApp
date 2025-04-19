@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    minHeight: windowHeight / 2, // Asegura que ocupe al menos la mitad de la altura de la pantalla
+    minHeight: windowHeight / 3, // Asegura que ocupe al menos la mitad de la altura de la pantalla
     paddingBottom: 50,
   },
   closeButton: {

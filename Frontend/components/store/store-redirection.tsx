@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   storeButtonText: {
-    fontSize: fontSizes.subTitles,
+    fontSize: fontSizes.body,
     textDecorationLine: "underline",
   },
 });

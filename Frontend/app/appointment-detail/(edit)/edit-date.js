@@ -1,25 +1,39 @@
-import { View, Text } from "react-native";
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { useState } from "react";
+import { StyleSheet, View, Text } from "react-native";
 import ChangeNotice from "../../../components/my-appointments/appointment-detail/change-notice";
-import GeneralHeader from "../../../components/general-header";
+import GeneralHeaderTitle from "../../../components/general-header-title";
 import ConfirmEdit from "../../../components/my-appointments/appointment-detail/edit/confirm-edit";
-
+import DateBody from "../../../components/schedule/assign-date/date-body";
+import { fontSizes } from "../../../constants/font-sizes";
 export default function EditDate() {
   const [showConfirmModal, setShowConfrimModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  
+  const handleConfirmChanges = () => {
+    // Aquí guardaríamos la fecha y hora seleccionada para la edición
+    setShowConfrimModal(true);
+  };
+  
+  const handleChangeDate = () => {
+    // Aquí implementaríamos la lógica para guardar los cambios de fecha
+    // y redireccionar al detalle de la cita
+    setShowConfrimModal(false);
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <GeneralHeader />
-      <Text style={{ fontSize: 24, fontWeight: "bold", margin: 20 }}>
-        Editar Fecha
+      <GeneralHeaderTitle title="Fecha" />
+      <Text style={styles.title}>
+        Cambia la fecha de tu cita.
       </Text>
-      <ConfirmEdit onConfirmChanges={() => setShowConfrimModal(true)} />
+      <DateBody />
+      <ConfirmEdit onConfirmChanges={handleConfirmChanges} />
 
       {showConfirmModal && (
         <View style={styles.container_canceling}>
           <ChangeNotice
-            onChange={() => setShowConfrimModal(false)}
+            onChange={handleChangeDate}
             message="¿Seguro que quieres cambiar la fecha de tu cita?"
             button_message="Cambiar fecha"
           />
@@ -39,5 +53,11 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
+  },
+  title: {
+    fontSize: fontSizes.largeSubTitles,
+    width: "90%",
+    alignSelf: "center",
+    marginVertical: 20,
   },
 });

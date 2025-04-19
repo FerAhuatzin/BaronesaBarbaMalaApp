@@ -1,23 +1,32 @@
 import { useRouter } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { fontSizes } from "@/constants/font-sizes";
+import EditItem from "./edit-item";
+
 
 export default function EditBody() {
   const router =  useRouter();
   return (
-    <View>
-        <Text>Selecciona que quieres editar de tus citas</Text>
-        <TouchableOpacity onPress={() => router.push("/appointment-detail/edit-service")}>
-            <Text>Servicio</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("/appointment-detail/edit-date")}>
-            <Text>Fecha</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("/appointment-detail/edit-barber")}>
-            <Text>Profesional</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => router.push("/appointment-detail/edit-contact")}>
-            <Text>Datos de contacto</Text>
-        </TouchableOpacity>
+    <View style={styles.container}>
+        <Text style={styles.title}>Selecciona que quieres editar de tus cita.</Text>
+        <EditItem title="Servicio" next_screen="./edit-service" />
+        <EditItem title="Fecha" next_screen="./edit-date" />
+        <EditItem title="Profesional" next_screen="./edit-barber" />
+        <EditItem title="Datos de contacto" next_screen="./edit-contact" />
     </View>
   );
 }
+
+const styles = StyleSheet.create({  
+    container: {
+        flex: 1,
+        backgroundColor: "white",
+        width: "90%",
+        alignSelf: "center",
+    },
+    title: {
+        fontSize: fontSizes.largeSubTitles,
+        marginBottom: 20,
+        marginTop: 20,
+    },
+});

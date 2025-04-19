@@ -4,4 +4,8 @@ export type ValidRoutes =
   | "./assign-barber"
   | "./assign-contact"
   | "./review-appointment"
-  | "./appointment-confirmation";
+  | "./appointment-confirmation"
+  | "./edit-service"
+  | "./edit-date"
+  | "./edit-barber"
+  | "./edit-contact";
