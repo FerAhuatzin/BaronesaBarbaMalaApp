@@ -27,7 +27,7 @@ export default function ScheduleHeader({ progress, totalSteps }: props) {
       <View style={styles.containerFlex}>
         <View style={styles.spacer}/>
         <Text style={styles.progressText}>
-          {currentStep} de {totalSteps} completados.
+          {currentStep} de {totalSteps} pasos completados.
         </Text>
       </View>
     </View>
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 30,
     width: "90%",
-
     alignSelf: "center",
   },
   containerFlex: {
