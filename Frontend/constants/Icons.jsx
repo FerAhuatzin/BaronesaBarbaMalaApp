@@ -38,3 +38,11 @@ export const EyeOffIcon = (props) => (
 export const MapPinIcon = (props) => (
     <Feather name="map-pin" {...props} />
 )
+
+export const ChevronUpIcon = (props) => (
+    <Ionicons name="chevron-up" {...props} />
+)
+
+export const ChevronDownIcon = (props) => (
+    <Ionicons name="chevron-down" {...props} />
+)

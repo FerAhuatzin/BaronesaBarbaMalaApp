@@ -5,7 +5,7 @@ import ScheduleHeader from "../../components/schedule/schedule-header";
 export default function ContactAssignment() {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <ScheduleHeader progress={1}/>
+      <ScheduleHeader progress={80} totalSteps={5}/>
       <Text style={{ fontSize: 24, fontWeight: "bold", margin: 20 }}>
         Pon tus datos de contacto
       </Text>

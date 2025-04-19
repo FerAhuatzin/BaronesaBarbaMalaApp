@@ -7,7 +7,7 @@ import AppointmentDetailActions from "../../components/my-appointments/appointme
 import ChangeNotice from "../../components/my-appointments/appointment-detail/change-notice";
 import { mockAppointments } from "../../components/my-appointments/mock-data";
 import { useLocalSearchParams } from "expo-router";
-import { Stack } from "expo-router";
+
 export default function AppointmentDetail() {
   const { appointment_id } = useLocalSearchParams();
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -33,13 +33,11 @@ export default function AppointmentDetail() {
       )}
 
       {showCancelModal && (
-        <View style={styles.container_canceling}>
-          <ChangeNotice
-            onChange={() => setShowCancelModal(false)}
-            message="¿Seguro que quieres cancelar tu cita?"
-            button_message="Cancelar cita"
-          />
-        </View>
+        <ChangeNotice 
+          onChange={() => setShowCancelModal(false)} 
+          message="¿Seguro que quieres cancelar tu cita?" 
+          button_message="Cancelar cita"
+        />
       )}
     </View>
   );

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     backgroundColor: "white",
-    paddingTop: 20,
+    paddingTop: 10,
   },
   profitTextContainer: {
     flex: 1,
