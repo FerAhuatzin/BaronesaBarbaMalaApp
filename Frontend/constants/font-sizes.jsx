@@ -1,5 +1,5 @@
 export const fontSizes = {
-  titles: 35,
+  titles: 34,
   largeSubTitles: 25,
   subTitles: 20,
   body: 16,

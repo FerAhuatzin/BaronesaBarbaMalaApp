@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.largeSubTitles,
     width: "90%",
     alignSelf: "center",
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 10,
   },
 });

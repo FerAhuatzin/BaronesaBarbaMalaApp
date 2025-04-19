@@ -46,3 +46,7 @@ export const ChevronUpIcon = (props) => (
 export const ChevronDownIcon = (props) => (
     <Ionicons name="chevron-down" {...props} />
 )
+
+export const ChevronRightIcon = (props) => (
+    <Ionicons name="chevron-forward" {...props} />
+)
