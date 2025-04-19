@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.subTitles,
     width: "90%",
     alignSelf: "center",
-    paddingVertical: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
   },
   noAppointmentsText0: {
     fontSize: fontSizes.subTitles,

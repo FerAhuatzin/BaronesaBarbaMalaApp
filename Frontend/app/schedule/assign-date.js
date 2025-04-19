@@ -1,15 +1,36 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import React from "react";
 import ScheduleFooter from "../../components/schedule/schedule-footer";
 import ScheduleHeader from "../../components/schedule/schedule-header";
+import { fontSizes } from "../../constants/font-sizes";
+import DateBody from "../../components/schedule/assign-date/date-body";
+
 export default function DateSelection() {
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <ScheduleHeader progress={1}/>
-      <Text style={{ fontSize: 24, fontWeight: "bold", margin: 20 }}>
-        Seleccionar la fecha de tu cita
-      </Text>
-      <ScheduleFooter next_screen="./assign-barber"  touchable_message="Siguiente"/>
+    <View style={styles.container}>
+      <ScheduleHeader progress={40} totalSteps={5} />
+      <Text style={styles.title}>Seleccionar la fecha de tu cita</Text>
+      <ScrollView>
+        <DateBody />
+      </ScrollView>
+
+      <ScheduleFooter
+        next_screen="./assign-barber"
+        touchable_message="Siguiente"
+      />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  title: {
+    fontSize: fontSizes.largeSubTitles,
+    width: "90%",
+    alignSelf: "center",
+    marginVertical: 20,
+  },
+});

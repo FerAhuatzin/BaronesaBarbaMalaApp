@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     width: "90%",
     backgroundColor: "white",
     alignSelf: "center",
-    paddingTop: 20,
+    paddingTop: 10,
   },
   subtitle: {
     fontSize: fontSizes.subTitles,
