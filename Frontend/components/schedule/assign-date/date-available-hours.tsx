@@ -15,7 +15,6 @@ interface DateAvailableHoursProps {
 export default function DateAvailableHours({ availableHours }: DateAvailableHoursProps) {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
-  // Agrupar horas por período del día
   const groupedHours = React.useMemo(() => {
     const morning: TimeSlot[] = [];
     const afternoon: TimeSlot[] = [];
@@ -43,7 +42,7 @@ export default function DateAvailableHours({ availableHours }: DateAvailableHour
     const isSelected = selectedTime === item.time;
 
     if (!item.available) {
-      return null; // No mostrar horas no disponibles
+      return null; 
     }
 
     return (
@@ -51,7 +50,7 @@ export default function DateAvailableHours({ availableHours }: DateAvailableHour
         style={[styles.timeSlot, isSelected && styles.selectedTimeSlot]}
         onPress={() => setSelectedTime(item.time)}
       >
-        <Text style={[styles.timeText, isSelected && styles.selectedTimeText]}>
+        <Text style={[styles.timeText]}>
           {item.time}
         </Text>
       </TouchableOpacity>
@@ -80,8 +79,7 @@ export default function DateAvailableHours({ availableHours }: DateAvailableHour
             >
               <Text 
                 style={[
-                  styles.timeText, 
-                  selectedTime === slot.time && styles.selectedTimeText
+                  styles.timeText
                 ]}
               >
                 {slot.time}
@@ -123,7 +121,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fontSizes.subTitles,
     marginBottom: 15,
-    color: '#333333',
   },
   content: {
     flex: 1,
@@ -134,29 +131,26 @@ const styles = StyleSheet.create({
   timeSectionTitle: {
     fontSize: fontSizes.body,
     marginBottom: 10,
-    color: '#555555',
+
   },
   timeGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   timeSlot: {
-    backgroundColor: '#f0f0f0',
+
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 15,
     margin: 4,
     minWidth: 70,
     alignItems: 'center',
   },
   timeText: {
     fontSize: fontSizes.captions,
-    color: '#2d4150',
+
   },
   selectedTimeSlot: {
-    backgroundColor: '#333333',
-  },
-  selectedTimeText: {
-    color: 'white',
+    backgroundColor: '#e0e0e0',
   },
   noHoursText: {
     fontSize: fontSizes.body,

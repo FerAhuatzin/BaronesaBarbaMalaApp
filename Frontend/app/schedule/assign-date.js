@@ -10,7 +10,7 @@ export default function DateSelection() {
     <View style={styles.container}>
       <ScheduleHeader progress={40} totalSteps={5} />
       <Text style={styles.title}>Seleccionar la fecha de tu cita</Text>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <DateBody />
       </ScrollView>
 
