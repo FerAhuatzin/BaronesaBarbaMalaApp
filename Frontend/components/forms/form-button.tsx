@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
-import { fontSizes } from "../../constants/font-sizes";
+import { commonStyles } from "../../constants/commonStyles";
 
 interface FormButtonProps {
   title: string;
@@ -19,14 +19,14 @@ export default function FormButton({
     <TouchableOpacity
       onPress={onPress}
       style={[
-        styles.button, 
+        commonStyles.button, 
         variant === 'primary' ? styles.primaryButton : styles.secondaryButton,
         style
       ]}
     >
       <Text 
         style={[
-          styles.buttonText, 
+          commonStyles.buttonText, 
           variant === 'primary' ? styles.primaryButtonText : styles.secondaryButtonText
         ]}
       >
@@ -37,22 +37,11 @@ export default function FormButton({
 }
 
 const styles = StyleSheet.create({
-  button: {
-    padding: 15,
-    borderRadius: 15,
-    alignItems: "center",
-    marginBottom: 20,
-    height: 50,
-    justifyContent: "center",
-  },
   primaryButton: {
     backgroundColor: "black",
   },
   secondaryButton: {
     backgroundColor: "transparent",
-  },
-  buttonText: {
-    fontSize: fontSizes.body,
   },
   primaryButtonText: {
     color: "white",

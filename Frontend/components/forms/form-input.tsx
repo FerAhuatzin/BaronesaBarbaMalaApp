@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import { fontSizes } from "../../constants/font-sizes";
+import { commonStyles } from "../../constants/commonStyles";
 
 interface FormInputProps {
   label: string;
@@ -24,7 +25,7 @@ export default function FormInput({
   rightComponent
 }: FormInputProps) {
   return (
-    <View style={styles.inputContainer}>
+    <View style={commonStyles.inputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
       {rightComponent ? (
         <View style={styles.inputWithRightComponent}>
@@ -42,7 +43,7 @@ export default function FormInput({
         </View>
       ) : (
         <TextInput
-          style={styles.input}
+          style={commonStyles.input}
           placeholder={placeholder || label}
           placeholderTextColor="#aaa"
           value={value}
@@ -57,23 +58,11 @@ export default function FormInput({
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    marginBottom: 20,
-  },
   inputLabel: {
     fontSize: fontSizes.body,
     marginBottom: 8,
     fontWeight: "500",
     color: "#333",
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 15,
-    padding: 15,
-    fontSize: fontSizes.body,
-    height: 50,
-    backgroundColor: "#fff",
   },
   inputWithRightComponent: {
     flexDirection: "row",

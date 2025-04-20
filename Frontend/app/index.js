@@ -4,6 +4,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { colors } from "../constants/colors";
 import { fontSizes } from "../constants/font-sizes";
+import { commonStyles } from "../constants/commonStyles";
 import { Stack } from "expo-router";
 
 export default function Index() {
@@ -27,7 +28,7 @@ export default function Index() {
                 <Image source={require('../assets/images/Barbamala-logo-white.png')} style={styles.logo} />
                 <Image source={require('../assets/images/Baronesa-logo-white.png')} style={styles.logo} />
               </View>
-              <TouchableOpacity style={styles.button} onPress={() => router.replace("/(tabs)")}>
+              <TouchableOpacity style={[commonStyles.button, styles.splashButton]} onPress={() => router.replace("/(tabs)")}>
                 <Text style={styles.buttonText}>Iniciar</Text>
               </TouchableOpacity>
             </View>
@@ -73,15 +74,10 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
-  button: {
+  splashButton: {
     backgroundColor: colors.barba_mala,
     width: "80%",
-    borderRadius: 15,
-    alignItems: "center",
-    marginBottom: 20,
-    height: 50,
     alignSelf: "center",
-    justifyContent: "center",
   },
   buttonText: {
     fontSize: fontSizes.subTitles,

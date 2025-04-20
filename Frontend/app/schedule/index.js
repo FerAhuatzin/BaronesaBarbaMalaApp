@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import AssignServiceFooter from "../../components/schedule/assign-service/assign-service-footer";
 import ScheduleHeader from "../../components/schedule/schedule-header";
 import ServiceOptions from "../../components/schedule/assign-service/service-options";
-import { fontSizes } from "../../constants/font-sizes";
+import { commonStyles } from "../../constants/commonStyles";
+
 export default function ServiceSelection() {
   const [totalCost, setTotalCost] = useState(0);
 
@@ -12,9 +13,9 @@ export default function ServiceSelection() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.pageContainer}>
       <ScheduleHeader progress={20} totalSteps={5}/>
-      <Text style={styles.title}>
+      <Text style={commonStyles.sectionTitle}>
         Selecciona tu servicio
       </Text>
       <View style={styles.serviceOptionsContainer}>
@@ -27,16 +28,6 @@ export default function ServiceSelection() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  title: {
-    fontSize: fontSizes.largeSubTitles,
-    width: "90%",
-    alignSelf: "center",
-    marginVertical: 20,
-  },
   serviceOptionsContainer: {
     flex: 1,
   },

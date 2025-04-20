@@ -1,8 +1,9 @@
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native";
 import DateCalendar from "./date-calendar";
 import DateAvailableHours from "./date-available-hours";
 import React, { useState, useEffect } from "react";
+import { commonStyles } from "../../../constants/commonStyles";
 
 interface TimeSlot {
   time: string;
@@ -89,7 +90,7 @@ export default function DateBody() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={commonStyles.scrollContainer} showsVerticalScrollIndicator={false}>
       <DateCalendar 
         selectedDate={selectedDate} 
         onSelectDate={(date) => {
@@ -99,7 +100,7 @@ export default function DateBody() {
       <DateAvailableHours 
         availableHours={availableHours}
       />
-    </View>
+    </ScrollView>
   );
 }
 

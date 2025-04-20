@@ -2,6 +2,7 @@ import { router, useRouter } from "expo-router";
 import { Text, TouchableOpacity, View, Image } from "react-native";
 import { StyleSheet } from "react-native";
 import { useState } from "react";
+import { commonStyles } from "../../constants/commonStyles";
 
 interface props {
   brandSelection: (brand: string) => void;
@@ -17,7 +18,7 @@ export default function BranchSelectionHeader({ brandSelection }: props) {
 
   return (
     <View style={styles.container0}>
-      <View style={styles.container}>
+      <View style={[commonStyles.widthContainer, styles.brandsRow]}>
         <View style={styles.brandContainer}>
           <TouchableOpacity onPress={() => handleBrandSelection("Barbamala")}>
             <Image
@@ -61,12 +62,9 @@ const styles = StyleSheet.create({
   container0: {
     backgroundColor: "white",
     paddingBottom: 20,
-  },
-  container: {
     paddingTop: 30,
-    backgroundColor: "white",
-    width: "90%",
-    alignSelf: "center",
+  },
+  brandsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

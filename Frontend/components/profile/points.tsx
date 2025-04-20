@@ -12,7 +12,6 @@ export default function CircleProgress({ points }: CircleProgressProps) {
   const radius = 80;
   const radius_barba_mala = 70;
   const strokeWidth = 2;
-  const circumference = 2 * Math.PI * radius;
 
   return (
     <TouchableOpacity style={styles.container}>

@@ -4,6 +4,7 @@ import { openGoogleMaps } from "../../../features/schedule/assign-branch/open-lo
 import { BranchDetails } from "../../../types/appointment";
 import { MapPinIcon } from "../../../constants/Icons";
 import { fontSizes } from "../../../constants/font-sizes";
+import { commonStyles } from "../../../constants/commonStyles";
 
 interface props {
   branch: BranchDetails;
@@ -13,21 +14,23 @@ export default function Branch({ branch }: props) {
   const router = useRouter();
   return (
     <TouchableOpacity 
-      style={styles.container}
+      style={[commonStyles.widthContainer, styles.container]}
       onPress={() => router.push("/schedule")}
     >
       <Image 
         source={{ uri: branch.image }} 
-        style={styles.branchImage} 
+        style={commonStyles.branchImage} 
       />
-      <View style={styles.infoRow}>
-        <Text style={styles.branchName}>{branch.name}</Text>
+      <View style={[commonStyles.row, styles.infoRow]}>
+        <Text style={[commonStyles.serviceText, styles.branchName]}>{branch.name}</Text>
         <TouchableOpacity 
-          style={styles.locationButton}
+          style={[commonStyles.roundedButton, styles.locationButton]}
           onPress={() => openGoogleMaps(branch.latitude, branch.longitude)}
         >
-          <MapPinIcon size={16} color="white" />
-          <Text style={styles.locationButtonText}>Ver ubicación</Text>
+          <View style={styles.locationButtonInner}>
+            <MapPinIcon size={16} color="white" />
+            <Text style={styles.locationButtonText}>Ver ubicación</Text>
+          </View>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -36,40 +39,24 @@ export default function Branch({ branch }: props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
-    alignSelf: "center",
     marginBottom: 20,
     overflow: "hidden",
     backgroundColor: "white",
   },
-  branchImage: {
-    width: "100%",
-    height: 150,
-    borderRadius: 15,
-    elevation: 5,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+  branchName: {
+    width: "60%",
+    paddingRight: 10,
   },
   infoRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     paddingTop: 10,
   },
-  branchName: {
-    fontSize: fontSizes.subTitles,
-    width: "58%",
-  },
   locationButton: {
-    width: "40%",
-    backgroundColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  locationButtonInner: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 15,
   },
   locationButtonText: {
     color: "white",

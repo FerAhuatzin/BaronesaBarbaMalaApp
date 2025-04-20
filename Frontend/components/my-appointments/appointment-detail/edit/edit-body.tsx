@@ -1,14 +1,13 @@
 import { useRouter } from "expo-router";
-import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
-import { fontSizes } from "@/constants/font-sizes";
+import { Text, View, StyleSheet } from "react-native";
 import EditItem from "./edit-item";
-
+import { commonStyles } from "@/constants/commonStyles";
 
 export default function EditBody() {
   const router =  useRouter();
   return (
-    <View style={styles.container}>
-        <Text style={styles.title}>Selecciona que quieres editar de tus cita.</Text>
+    <View style={[commonStyles.widthContainer, styles.flex]}>
+        <Text style={[commonStyles.sectionTitle, styles.sectionTitleOverwrite]}>Selecciona que quieres editar de tus cita.</Text>
         <EditItem title="Servicio" next_screen="./edit-service" />
         <EditItem title="Fecha" next_screen="./edit-date" />
         <EditItem title="Profesional" next_screen="./edit-barber" />
@@ -18,15 +17,12 @@ export default function EditBody() {
 }
 
 const styles = StyleSheet.create({  
-    container: {
+    flex: {
         flex: 1,
         backgroundColor: "white",
-        width: "90%",
-        alignSelf: "center",
     },
-    title: {
-        fontSize: fontSizes.largeSubTitles,
-        marginBottom: 20,
-        marginTop: 20,
+    sectionTitleOverwrite: {
+        width: "90%",
+        alignSelf: "flex-start",
     },
 });

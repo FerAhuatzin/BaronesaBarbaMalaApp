@@ -1,12 +1,13 @@
 import { useRouter } from "expo-router";
 import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { CloseIcon } from "@/constants/Icons";
+import { commonStyles } from "../constants/commonStyles";
 
 export default function GeneralHeader() {
   const router = useRouter();
   return (
-    <View style={styles.header}>
-      <TouchableOpacity onPress={() => router.replace("/(tabs)")} style={styles.container}>
+    <View style={commonStyles.header}>
+      <TouchableOpacity onPress={() => router.replace("/(tabs)")} style={commonStyles.container}>
         <CloseIcon size={30} />
       </TouchableOpacity>
     </View>
@@ -14,14 +15,5 @@ export default function GeneralHeader() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "white",
-  },
-  container: {
-    width: "90%",
-    backgroundColor: "white",
-    alignSelf: "center",
-    paddingTop: 30,
-    marginBottom: 10,
-  },
+  // Estilos específicos si se necesitan en el futuro
 });

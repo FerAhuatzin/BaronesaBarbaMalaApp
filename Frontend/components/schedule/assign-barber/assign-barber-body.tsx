@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { View, FlatList, StyleSheet } from "react-native";
 import { BarberMockData } from "./mock-data";
 import BarberInfo from "./barber-info";
+import { commonStyles } from "../../../constants/commonStyles";
 
 export default function AssignBarberBody() {
     const [selectedBarber, setSelectedBarber] = useState<Barber | null>(null);
@@ -39,12 +40,12 @@ export default function AssignBarberBody() {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[commonStyles.widthContainer, commonStyles.flex]}>
             <FlatList
                 data={barbers}
                 renderItem={renderBarberItem}
                 keyExtractor={item => item.id.toString()}
-                contentContainerStyle={styles.listContainer}
+                contentContainerStyle={commonStyles.listContainer}
                 showsVerticalScrollIndicator={false}
             />
         </View>
@@ -52,12 +53,5 @@ export default function AssignBarberBody() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: '90%',
-        alignSelf: 'center',
-    },
-    listContainer: {
-        paddingBottom: 20,
-    }
+    // Styles removed and replaced with commonStyles
 });

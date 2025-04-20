@@ -6,11 +6,11 @@ import {
 } from "react-native";
 import { Stack } from "expo-router";
 import GeneralHeaderTitle from "../../components/general-header-title";
-import { fontSizes } from "../../constants/font-sizes";
 import { useState } from "react";
 import FormInput from "../../components/forms/form-input";
 import PasswordInput from "../../components/forms/password-input";
 import FormButton from "../../components/forms/form-button";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function Login() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function Login() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={commonStyles.safeArea}>
       <Stack.Screen
         options={{
           headerShown: true,
@@ -38,7 +38,7 @@ export default function Login() {
       />
 
       <View style={styles.container}>
-        <View style={styles.formContainer}>
+        <View style={commonStyles.formContainer}>
           <FormInput
             label="Correo electrónico"
             placeholder="Correo electrónico"
@@ -73,18 +73,11 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   container: {
     paddingVertical: 20,
     width: "90%",
     alignSelf: "center",
     justifyContent: "center",
-  },
-  formContainer: {
-    paddingBottom: 20,
   },
   registerContainer: {
     marginTop: 10,

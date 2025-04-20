@@ -3,15 +3,17 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { fontSizes } from "../../constants/font-sizes";
 import { StyleSheet } from "react-native";
 import { GiftIcon, CalendarIcon } from "../../constants/Icons";
+import { commonStyles } from "../../constants/commonStyles";
+
 export default function ProfileNotLoggedIn() {
   const router = useRouter();
   return (
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>
+    <View style={[commonStyles.widthContainer, styles.container]}>
+      <Text style={commonStyles.subtitle}>
         Aún no has iniciado sesión con Baronesa, ¿Por qué hacerlo?
       </Text>
       <View style={styles.profitsContainer}>
-        <View style={styles.profitContainer}>
+        <View style={[commonStyles.row, styles.profitContainer]}>
           <CalendarIcon size={40} />
           <View style={styles.profitTextContainer}>
           <Text style={styles.profitText}>
@@ -19,7 +21,7 @@ export default function ProfileNotLoggedIn() {
           </Text>
           </View>
         </View>
-        <View style={styles.profitContainer}>
+        <View style={[commonStyles.row, styles.profitContainer]}>
           <GiftIcon size={40} />
           <View style={styles.profitTextContainer}>
           <Text style={styles.profitText}>
@@ -27,11 +29,10 @@ export default function ProfileNotLoggedIn() {
             tus siguientes citas.
           </Text>
           </View>
-          
         </View>
       </View>
-      <TouchableOpacity style={styles.loginButton} onPress={() => router.push("/login")}>
-        <Text style={styles.loginButtonText}>Iniciar sesión o registrarse</Text>
+      <TouchableOpacity style={commonStyles.primaryButton} onPress={() => router.push("/login")}>
+        <Text style={commonStyles.buttonText}>Iniciar sesión o registrarse</Text>
       </TouchableOpacity>
     </View>
   );
@@ -39,8 +40,6 @@ export default function ProfileNotLoggedIn() {
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
-    alignSelf: "center",
     backgroundColor: "white",
     paddingTop: 10,
   },
@@ -51,26 +50,10 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   profitContainer: {
-    flexDirection: "row",
     paddingVertical: 15,
-  },
-  subtitle: {
-    fontSize: fontSizes.subTitles,
   },
   profitText: {
     fontSize: fontSizes.body,
     paddingLeft: 10,
-  },
-  loginButton: {
-    backgroundColor: "black",
-    padding: 10,
-    borderRadius: 15,
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  loginButtonText: {
-    color: "white",
-    fontSize: fontSizes.body,
   },
 });
