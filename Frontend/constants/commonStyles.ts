@@ -86,7 +86,7 @@ export const commonStyles = StyleSheet.create({
   },
 
   captionText: {
-    fontSize: fontSizes.captions,
+    fontSize: fontSizes.body,
     color: '#666',
     marginBottom: 3,
   },

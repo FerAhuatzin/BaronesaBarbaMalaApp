@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 import { fontSizes } from "@/constants/font-sizes";
 import { commonStyles } from "@/constants/commonStyles";
-
+import {colors} from "@/constants/colors";
 interface BarberInfoProps {
   barber: Barber;
   isSelected: boolean;
@@ -62,6 +62,6 @@ const styles = StyleSheet.create({
   },
   ratingStars: {
     fontSize: fontSizes.captions,
-    color: '#FFD700',
+    color: colors.barba_mala,
   }
 });

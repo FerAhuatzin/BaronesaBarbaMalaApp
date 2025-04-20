@@ -78,6 +78,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.barba_mala,
     width: "80%",
     alignSelf: "center",
+    alignItems: "center",
+    padding: 0,
   },
   buttonText: {
     fontSize: fontSizes.subTitles,

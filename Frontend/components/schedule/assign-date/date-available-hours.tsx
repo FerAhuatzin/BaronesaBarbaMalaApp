@@ -79,7 +79,8 @@ export default function DateAvailableHours({ availableHours }: DateAvailableHour
             >
               <Text 
                 style={[
-                  styles.timeText
+                  styles.timeText,
+                  selectedTime === slot.time && styles.selectedTimeText
                 ]}
               >
                 {slot.time}
@@ -146,11 +147,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   timeText: {
-    fontSize: fontSizes.captions,
-
+    fontSize: fontSizes.body,
+    color: "gray",
   },
   selectedTimeSlot: {
     backgroundColor: '#e0e0e0',
+  },
+  selectedTimeText: {
+    color: "black",
   },
   noHoursText: {
     fontSize: fontSizes.body,

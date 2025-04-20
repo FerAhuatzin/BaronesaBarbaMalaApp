@@ -1,5 +1,4 @@
 import { AppointmentDetails } from "@/types/appointment";
-import { useRouter } from "expo-router";
 import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { MapPinIcon } from "../../../constants/Icons";
 import { openGoogleMaps } from "../../../features/schedule/assign-branch/open-location";
@@ -11,7 +10,6 @@ interface Props {
 }
 
 export default function AppointmentDetailBody({ appointment }: Props) {
-  const router = useRouter();
 
   if (!appointment) {
     return <Text>Cargando...</Text>; // O cualquier otro indicador de carga
@@ -37,13 +35,10 @@ export default function AppointmentDetailBody({ appointment }: Props) {
           <Text style={styles.locationButtonText}>Ver ubicación</Text>
         </TouchableOpacity>
       </View>
-      <Text style={commonStyles.captionText}>{appointment.branch}</Text>
-      <Text style={commonStyles.captionText}>{appointment.date}</Text>
-      <View style={commonStyles.row}>
-        <Text style={styles.captionText}>Atendido por: {appointment.stylist}</Text>
-        <Text style={styles.priceText}>Total: ${appointment.price}</Text>
-      </View>
-     
+      <Text style={[commonStyles.captionText, styles.captionText]}>{appointment.branch}</Text>
+      <Text style={[commonStyles.captionText, styles.captionText]}>{appointment.date}</Text>
+      <Text style={[commonStyles.captionText, styles.captionText]}>Atendido por: {appointment.stylist}</Text>
+      <Text style={[commonStyles.captionText, styles.captionText]}>Total: ${appointment.price}</Text>
     </View>
   );
 }
@@ -51,10 +46,7 @@ export default function AppointmentDetailBody({ appointment }: Props) {
 const styles = StyleSheet.create({
   infoRow: {
     paddingTop: 10,
-    paddingBottom: 20,
-    marginBottom: 20,
-    borderBottomWidth: 1,
-    borderColor: "#ddd",
+    paddingBottom: 10,
   },
   locationButton: {
     width: "40%",
@@ -71,9 +63,7 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.captions,
   },
   captionText: {
-    fontSize: fontSizes.body,
-    color: "gray",
-    paddingBottom: 3,
+    paddingBottom: 10,
   },
   priceText: {
     fontSize: fontSizes.body,

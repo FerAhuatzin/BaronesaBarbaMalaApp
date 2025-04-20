@@ -13,9 +13,9 @@ export default function AssignBarberBody() {
         //TODO: get barbers from backend
         const anyBarber: Barber = {
             id: 0,
-            name: "Cualquier barbero disponible",
+            name: "Cualquiera",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfD2JEoJoRDVSAnoZninUWEc0j0V64gVnKWw&s",
-            description: "Selecciona esta opción para el primer barbero disponible",
+            description: "Se asignará automáticamente.",
             rating: 5.0
         };
         
