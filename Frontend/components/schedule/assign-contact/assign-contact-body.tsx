@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { fontSizes } from "@/constants/font-sizes";
 import FormInput from "@/components/forms/form-input";
 import { useState } from "react";
-
+import { commonStyles } from "@/constants/commonStyles";
 
 export default function AssignContactBody() {
   const [fullName, setFullName] = useState("");
@@ -10,7 +10,7 @@ export default function AssignContactBody() {
   const [phone, setPhone] = useState("");
 
   return (
-    <View style={styles.container}>
+    <View style={[commonStyles.widthContainer, commonStyles.flex]}>
       <Text style={styles.text}>
         Inicia sesión para omitir
         este paso y ganar puntos para pagar tus citas.
@@ -43,11 +43,6 @@ export default function AssignContactBody() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: "90%",
-    alignSelf: "center",
-    flex: 1,
-  },
   text: {
     fontSize: fontSizes.body,
     fontWeight: "bold",

@@ -2,6 +2,7 @@ import { useRouter } from "expo-router";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { fontSizes } from "../constants/font-sizes";
 import { CloseIcon } from "../constants/Icons";
+import { commonStyles } from "../constants/commonStyles";
 
 interface Props {
   title: string;
@@ -10,8 +11,8 @@ interface Props {
 export default function GeneralHeaderTitle({ title }: Props) {
   const router = useRouter();
   return (
-    <View style={styles.header}>
-      <View style={styles.container}>
+    <View style={commonStyles.header}>
+      <View style={[commonStyles.container, styles.containerWithRow]}>
         <TouchableOpacity onPress={() => router.back()}>
             <CloseIcon size={30} />
         </TouchableOpacity>
@@ -22,17 +23,9 @@ export default function GeneralHeaderTitle({ title }: Props) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "white",
-  },
-  container: {
-    width: "90%",
+  containerWithRow: {
     flexDirection: "row",
-    backgroundColor: "white",
-    alignSelf: "center",
-    paddingTop: 30,
     alignItems: "center",
-
   },
   title: {
     fontSize: fontSizes.titles,

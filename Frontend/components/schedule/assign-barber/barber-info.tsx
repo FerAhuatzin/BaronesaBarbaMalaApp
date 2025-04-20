@@ -2,6 +2,7 @@ import { Barber } from "@/types/barber";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 import { fontSizes } from "@/constants/font-sizes";
+import { commonStyles } from "@/constants/commonStyles";
 
 interface BarberInfoProps {
   barber: Barber;
@@ -18,8 +19,8 @@ export default function BarberInfo({ barber, isSelected, onSelect }: BarberInfoP
       <Image source={{ uri: barber.image }} style={styles.barberImage} />
       <View style={styles.barberInfo}>
         <Text style={styles.barberName}>{barber.name}</Text>
-        <Text style={styles.barberDescription}>{barber.description}</Text>
-        <View style={styles.ratingContainer}>
+        <Text style={commonStyles.captionText}>{barber.description}</Text>
+        <View style={commonStyles.row}>
           <Text style={styles.ratingText}>{barber.rating}</Text>
           <Text style={styles.ratingStars}>{'★'.repeat(Math.floor(barber.rating))}</Text>
         </View>
@@ -54,15 +55,6 @@ const styles = StyleSheet.create({
   barberName: {
     fontSize: fontSizes.subTitles,
     marginBottom: 4,
-  },
-  barberDescription: {
-    fontSize: fontSizes.captions,
-    color: '#666',
-    marginBottom: 8,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   ratingText: {
     fontSize: fontSizes.captions,

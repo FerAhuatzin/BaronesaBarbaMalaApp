@@ -3,7 +3,6 @@ import { Text, TouchableOpacity, View, Image } from "react-native";
 import { AppointmentDetails } from "../../types/appointment";
 import { StyleSheet } from "react-native";
 import { fontSizes } from "../../constants/font-sizes";
-import { colors } from "../../constants/colors";
 
 interface PastAppointmentProps {
   appointment: AppointmentDetails;
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 15,
     padding: 0,
-    width: "90%",
+    width: "100%",
     alignSelf: "center",
     borderWidth: 1,
     borderColor: "#E0E0E0",

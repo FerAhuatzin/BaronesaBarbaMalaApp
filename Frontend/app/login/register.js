@@ -10,6 +10,7 @@ import { useState } from "react";
 import FormInput from "../../components/forms/form-input";
 import PasswordInput from "../../components/forms/password-input";
 import FormButton from "../../components/forms/form-button";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function Register() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function Register() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={commonStyles.safeArea}>
       <Stack.Screen
         options={{
           headerShown: true,
@@ -35,7 +36,7 @@ export default function Register() {
       />
 
       <View style={styles.container}>
-        <View style={styles.formContainer}>
+        <View style={commonStyles.formContainer}>
           <FormInput
             label="Nombre completo"
             placeholder="Nombre completo"
@@ -78,16 +79,9 @@ export default function Register() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   container: {
     paddingVertical: 20,
     width: "90%",
     alignSelf: "center",
-  },
-  formContainer: {
-    paddingBottom: 20,
   },
 });

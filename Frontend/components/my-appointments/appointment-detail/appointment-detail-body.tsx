@@ -4,6 +4,7 @@ import { Text, View, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { MapPinIcon } from "../../../constants/Icons";
 import { openGoogleMaps } from "../../../features/schedule/assign-branch/open-location";
 import { fontSizes } from "../../../constants/font-sizes";
+import { commonStyles } from "../../../constants/commonStyles";
 
 interface Props {
   appointment: AppointmentDetails;
@@ -17,17 +18,17 @@ export default function AppointmentDetailBody({ appointment }: Props) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.widthContainer}>
       <Image
         source={
           appointment.branchImage
             ? { uri: appointment.branchImage }
             : require("../../../assets/images/SplashImage.jpg")
         }
-        style={styles.branchImage}
+        style={commonStyles.branchImage}
       />
-      <View style={styles.infoRow}>
-        <Text style={styles.serviceName}>{appointment.service}</Text>
+      <View style={[commonStyles.row, styles.infoRow]}>
+        <Text style={commonStyles.serviceText}>{appointment.service}</Text>
         <TouchableOpacity
           style={styles.locationButton}
           onPress={() => openGoogleMaps(appointment.latitude, appointment.longitude)}
@@ -36,9 +37,9 @@ export default function AppointmentDetailBody({ appointment }: Props) {
           <Text style={styles.locationButtonText}>Ver ubicación</Text>
         </TouchableOpacity>
       </View>
-      <Text style={styles.captionText}>{appointment.branch}</Text>
-      <Text style={styles.captionText}>{appointment.date}</Text>
-      <View style={styles.captionRow}>
+      <Text style={commonStyles.captionText}>{appointment.branch}</Text>
+      <Text style={commonStyles.captionText}>{appointment.date}</Text>
+      <View style={commonStyles.row}>
         <Text style={styles.captionText}>Atendido por: {appointment.stylist}</Text>
         <Text style={styles.priceText}>Total: ${appointment.price}</Text>
       </View>
@@ -48,34 +49,12 @@ export default function AppointmentDetailBody({ appointment }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: "90%",
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  branchImage: {
-    width: "100%",
-    height: 150,
-    borderRadius: 15,
-  },
   infoRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
     paddingTop: 10,
     paddingBottom: 20,
     marginBottom: 20,
     borderBottomWidth: 1,
     borderColor: "#ddd",
-  },
-  captionRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  serviceName: {
-    fontSize: fontSizes.subTitles,
-    width: "58%",
   },
   locationButton: {
     width: "40%",
@@ -92,12 +71,12 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.captions,
   },
   captionText: {
-    fontSize: fontSizes.captions,
+    fontSize: fontSizes.body,
     color: "gray",
     paddingBottom: 3,
   },
   priceText: {
-    fontSize: fontSizes.captions,
+    fontSize: fontSizes.body,
     color: "black",
   },
 });

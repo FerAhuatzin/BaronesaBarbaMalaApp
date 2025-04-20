@@ -7,6 +7,7 @@ import { fontSizes } from "../../constants/font-sizes";
 import TabsHeader from "../../components/tabs-header";
 import { Stack, useRouter } from "expo-router";
 import { mockAppointments } from "../../components/my-appointments/mock-data";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function MyAppointments() {
   const router = useRouter();
@@ -14,13 +15,13 @@ export default function MyAppointments() {
   const pastAppointments = mockAppointments.filter(app => app.status === 'completed' || app.status === 'cancelled');
   
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.pageContainer}>
       <Stack.Screen options={{ header: () => <TabsHeader title="Mis citas" /> }} />
       
-      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+      <ScrollView style={commonStyles.scrollContainer} showsVerticalScrollIndicator={false}>
         {mockAppointments.length > 0 ? (
           <>
-            <Text style={styles.subtitle}>Próximas</Text>
+            <Text style={commonStyles.subtitle}>Próximas</Text>
             
             {upcomingAppointments.length > 0 ? (
               upcomingAppointments.map(appointment => (
@@ -30,7 +31,7 @@ export default function MyAppointments() {
               <Text style={styles.noAppointmentsText}>No tienes citas próximas</Text>
             )}
             
-            <Text style={styles.subtitle}>Pasadas</Text>
+            <Text style={commonStyles.subtitle}>Pasadas</Text>
             
             {pastAppointments.length > 0 ? (
               pastAppointments.map(appointment => (
@@ -57,20 +58,6 @@ export default function MyAppointments() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  scrollContainer: {
-    flex: 1,
-  },
-  subtitle: {
-    fontSize: fontSizes.subTitles,
-    width: "90%",
-    alignSelf: "center",
-    paddingTop: 10,
-    paddingBottom: 20,
-  },
   noAppointmentsText0: {
     fontSize: fontSizes.subTitles,
   },

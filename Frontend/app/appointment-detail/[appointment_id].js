@@ -1,12 +1,12 @@
-import { View, Text, TouchableOpacity, Modal, Pressable } from "react-native";
+import { View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
 import GeneralHeaderTitle from "../../components/general-header-title";
 import AppointmentDetailBody from "../../components/my-appointments/appointment-detail/appointment-detail-body";
 import AppointmentDetailActions from "../../components/my-appointments/appointment-detail/appointment-detail-actions";
 import ChangeNotice from "../../components/my-appointments/appointment-detail/change-notice";
 import { mockAppointments } from "../../components/my-appointments/mock-data";
 import { useLocalSearchParams } from "expo-router";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function AppointmentDetail() {
   const { appointment_id } = useLocalSearchParams();
@@ -24,7 +24,7 @@ export default function AppointmentDetail() {
   }, [appointment_id]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={commonStyles.pageContainer}>
       <GeneralHeaderTitle title="Detalle de cita" />
 
       <AppointmentDetailBody appointment={appointment} />
@@ -42,16 +42,3 @@ export default function AppointmentDetail() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container_canceling: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: "rgba(0,0,0,0.5)", // Fondo opaco
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});

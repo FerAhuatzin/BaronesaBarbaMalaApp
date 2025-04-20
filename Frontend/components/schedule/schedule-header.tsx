@@ -1,9 +1,10 @@
 import { useRouter } from "expo-router";
-import { Text, TouchableOpacity, View } from "react-native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CloseIcon } from "../../constants/Icons";
 import { colors } from "../../constants/colors";
 import { fontSizes } from "../../constants/font-sizes";
+import { commonStyles } from "../../constants/commonStyles";
+
 interface props {
   progress: number;
   totalSteps: number;

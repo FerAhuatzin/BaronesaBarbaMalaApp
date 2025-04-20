@@ -3,14 +3,14 @@ import React from "react";
 import ScheduleFooter from "../../components/schedule/schedule-footer";
 import ScheduleHeader from "../../components/schedule/schedule-header";
 import AssignContactBody from "../../components/schedule/assign-contact/assign-contact-body";
-import { fontSizes } from "../../constants/font-sizes";
 import { StyleSheet } from "react-native";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function ContactAssignment() {
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.pageContainer}>
       <ScheduleHeader progress={80} totalSteps={5}/>
-      <Text style={styles.title}>
+      <Text style={commonStyles.sectionTitle}>
         Pon tus datos de contacto
       </Text>
       <AssignContactBody />
@@ -20,15 +20,5 @@ export default function ContactAssignment() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  title: {
-    fontSize: fontSizes.largeSubTitles,
-    width: "90%",
-    alignSelf: "center",
-    marginTop: 20,
-    marginBottom: 10,
-  },
+  // Estilos específicos si se necesitan en el futuro
 }); 

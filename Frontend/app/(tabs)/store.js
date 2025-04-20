@@ -4,10 +4,11 @@ import TabsHeader from "../../components/tabs-header";
 import StoreRedirection from "../../components/store/store-redirection";
 import { StyleSheet } from "react-native";
 import { Stack } from "expo-router";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function Store() {
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.pageContainer}>
       <Stack.Screen options={{ header: () => <TabsHeader title="Tienda" /> }} />
       <StoreRedirection />
     </View>
@@ -15,8 +16,5 @@ export default function Store() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
+  // Estilos específicos si se necesitan en el futuro
 });

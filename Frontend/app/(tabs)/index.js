@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Stack } from "expo-router";
 import {mockBranches}  from "../../components/schedule/assign-branch/mock-data";
 import { fontSizes } from "../../constants/font-sizes";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function Schedule() {
   const [brand, setBrand] = useState("Barbamala");
@@ -16,7 +17,7 @@ export default function Schedule() {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.pageContainer}>
       <Stack.Screen options={{ header: () => <BranchSelectionHeader brandSelection={setBrand} /> }} />
     
       
@@ -25,25 +26,18 @@ export default function Schedule() {
         renderItem={({ item }) => <Branch branch={item} />}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.listContainer}
+        contentContainerStyle={commonStyles.listContainer}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   title: {
     fontSize: fontSizes.subTitles,
     fontWeight: "bold",
     marginVertical: 20,
     marginHorizontal: 20,
-  },
-  listContainer: {
-    paddingBottom: 20,
   }
 });
 

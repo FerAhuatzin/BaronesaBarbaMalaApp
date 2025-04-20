@@ -4,12 +4,13 @@ import ScheduleFooter from "../../components/schedule/schedule-footer";
 import ScheduleHeader from "../../components/schedule/schedule-header";
 import ReviewBody from "../../components/schedule/review-appointment/review-body";
 import { fontSizes } from "../../constants/font-sizes";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function ReviewAppointment() {
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.pageContainer}>
       <ScheduleHeader progress={100} totalSteps={5}/>
-      <Text style={styles.title}>
+      <Text style={commonStyles.sectionTitle}>
         Confirma que todo se vea bien
       </Text>
       <ReviewBody/>
@@ -19,15 +20,5 @@ export default function ReviewAppointment() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  title: {
-    fontSize: fontSizes.largeSubTitles,
-    width: "90%",
-    alignSelf: "center",
-    marginTop: 20,
-    marginBottom: 10,
-  },
+  // Estilos específicos si se necesitan en el futuro
 });

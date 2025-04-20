@@ -4,12 +4,13 @@ import ScheduleFooter from "../../components/schedule/schedule-footer";
 import ScheduleHeader from "../../components/schedule/schedule-header";
 import { fontSizes } from "../../constants/font-sizes";
 import AssignBarberBody from "../../components/schedule/assign-barber/assign-barber-body";
+import { commonStyles } from "../../constants/commonStyles";
 
 export default function BarberSelection() {
   return (
-    <View style={styles.container}>
+    <View style={commonStyles.pageContainer}>
       <ScheduleHeader progress={60} totalSteps={5}/>
-      <Text style={styles.title}>
+      <Text style={commonStyles.sectionTitle}>
         Selecciona quien hará tu servicio
       </Text>
       <AssignBarberBody />
@@ -19,14 +20,5 @@ export default function BarberSelection() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  title: {
-    fontSize: fontSizes.largeSubTitles,
-    width: "90%",
-    alignSelf: "center",
-    marginVertical: 20,
-  },
+  // Estilos específicos si se necesitan en el futuro
 });
