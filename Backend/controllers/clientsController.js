@@ -213,6 +213,28 @@ exports.logout = async (req, res) => {
   }
 };
 
+exports.addPoints = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { Emoney } = req.body;
+    await Client.addPoints(id, Emoney);
+    res.json({ message: `Se agregaron ${Emoney} puntos al cliente ${id}`});
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.removePoints = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { Emoney } = req.body;
+    await Client.removePoints(id, Emoney);
+    res.json({ message: `Se restaron ${Emoney} puntos al cliente ${id}` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+=======
 // Obtener los puntos de un cliente
 exports.getEmoney = (req, res) => {
   Client.getById(req.params.id, (err, results) => {

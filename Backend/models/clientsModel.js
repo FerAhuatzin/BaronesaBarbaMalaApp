@@ -50,7 +50,25 @@ const Client = {
       [clientId]
     );
     return result;
+  },
+
+
+  addPoints: async (clientId, Emoney) => {
+    const [result] = await pool.query(
+      "UPDATE Clients SET Emoney = Emoney + ? WHERE idClient = ?",
+      [Emoney, clientId]
+    );
+    return result;
+  },
+  
+  removePoints: async (clientId, Emoney) => {
+    const [result] = await pool.query(
+      "UPDATE Clients SET Emoney = GREATEST(Emoney - ?, 0) WHERE idClient = ?",
+      [Emoney, clientId]
+    );
+    return result;
   }
+
 };
 
 module.exports = Client;

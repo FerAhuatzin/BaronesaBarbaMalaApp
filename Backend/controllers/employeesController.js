@@ -41,6 +41,16 @@ exports.deleteEmployee = (req, res) => {
   });
 };
 
+exports.getEmployeesByBranch = async (req, res) => {
+  try {
+    const branchId = req.params.branchId;
+    const data = await Employee.getByBranch(branchId);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.getEmployeesByBranch = (req, res) => {
   const branchId = req.params.branchId;
   

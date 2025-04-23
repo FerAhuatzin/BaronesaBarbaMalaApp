@@ -1,29 +1,43 @@
-const db = require('../config/database');
+const pool = require('../config/database');
 
 const Employee = {
-  getAll: (callback) => {
-    db.query("SELECT * FROM Employees", callback);
+  getAll: async () => {
+    const [rows] = await pool.query("SELECT * FROM Employees");
+    return rows;
   },
 
-  getById: (id, callback) => {
-    db.query("SELECT * FROM Employees WHERE idEmployee = ?", [id], callback);
+  getById: async (id) => {
+    const [rows] = await pool.query("SELECT * FROM Employees WHERE idEmployee = ?", [id]);
+    return rows[0]; // o simplemente return rows si quieres el arreglo completo
   },
 
-  create: (employee, callback) => {
-    db.query("INSERT INTO Employees SET ?", employee, callback);
+  create: async (employee) => {
+    const [result] = await pool.query("INSERT INTO Employees SET ?", [employee]);
+    return result;
   },
 
-  update: (id, employee, callback) => {
-    db.query("UPDATE Employees SET ? WHERE idEmployee = ?", [employee, id], callback);
+  update: async (id, employee) => {
+    const [result] = await pool.query("UPDATE Employees SET ? WHERE idEmployee = ?", [employee, id]);
+    return result;
   },
 
-  delete: (id, callback) => {
-    db.query("DELETE FROM Employees WHERE idEmployee = ?", [id], callback);
+  delete: async (id) => {
+    const [result] = await pool.query("DELETE FROM Employees WHERE idEmployee = ?", [id]);
+    return result;
   },
+
+  getByBranch: async (branchId) => {
+    const [rows] = await pool.query(
+      "SELECT Name, Position, Description, Profile FROM Employees WHERE idBranch = ?",
+      [branchId]
+    );
+    return rows;
+  }
 
   getByBranch: (branchId, callback) => {
     db.query('SELECT Name, Description FROM Employees WHERE idBranch = ?', [branchId], callback);
   },
+
 
 };
 

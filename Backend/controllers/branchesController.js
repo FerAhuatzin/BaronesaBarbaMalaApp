@@ -40,3 +40,13 @@ exports.deleteBranch = (req, res) => {
     res.json({ message: "Branch deleted" });
   });
 };
+
+exports.getBranchesByBrandName = async (req, res) => {
+  try {
+    const brandName = req.params.brandName;
+    const data = await Branch.getByBrandName(brandName);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
