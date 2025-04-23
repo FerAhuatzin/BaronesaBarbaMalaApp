@@ -212,3 +212,25 @@ exports.logout = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.addPoints = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { Emoney } = req.body;
+    await Client.addPoints(id, Emoney);
+    res.json({ message: `Se agregaron ${Emoney} puntos al cliente ${id}`});
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.removePoints = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { Emoney } = req.body;
+    await Client.removePoints(id, Emoney);
+    res.json({ message: `Se restaron ${Emoney} puntos al cliente ${id}` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

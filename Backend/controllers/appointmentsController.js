@@ -40,3 +40,13 @@ exports.deleteAppointment = (req, res) => {
     res.json({ message: "Appointment deleted" });
   });
 };
+
+exports.getAppointmentsByClient = async (req, res) => {
+  try {
+    const clientId = req.params.clientId;
+    const data = await Appointment.getByClient(clientId);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

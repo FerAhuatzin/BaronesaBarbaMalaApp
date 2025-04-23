@@ -40,3 +40,13 @@ exports.deleteEmployee = (req, res) => {
     res.json({ message: "Employee deleted successfully" });
   });
 };
+
+exports.getEmployeesByBranch = async (req, res) => {
+  try {
+    const branchId = req.params.branchId;
+    const data = await Employee.getByBranch(branchId);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

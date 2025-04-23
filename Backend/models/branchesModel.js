@@ -1,25 +1,38 @@
-const db = require('../config/database');
+const pool = require('../config/database');
 
 const Branch = {
-  getAll: (callback) => {
-    db.query("SELECT * FROM Branches", callback);
+  getAll: async () => {
+    const [rows] = await pool.query("SELECT * FROM Branches");
+    return rows;
   },
 
-  getById: (id, callback) => {
-    db.query("SELECT * FROM Branches WHERE idBranches = ?", [id], callback);
+  getById: async (id) => {
+    const [rows] = await pool.query("SELECT * FROM Branches WHERE idBranches = ?", [id]);
+    return rows[0]; // o return rows si quieres el arreglo completo
   },
 
-  create: (branch, callback) => {
-    db.query("INSERT INTO Branches SET ?", branch, callback);
+  create: async (branch) => {
+    const [result] = await pool.query("INSERT INTO Branches SET ?", [branch]);
+    return result;
   },
 
-  update: (id, branch, callback) => {
-    db.query("UPDATE Branches SET ? WHERE idBranches = ?", [branch, id], callback);
+  update: async (id, branch) => {
+    const [result] = await pool.query("UPDATE Branches SET ? WHERE idBranches = ?", [branch, id]);
+    return result;
   },
 
-  delete: (id, callback) => {
-    db.query("DELETE FROM Branches WHERE idBranches = ?", [id], callback);
+  delete: async (id) => {
+    const [result] = await pool.query("DELETE FROM Branches WHERE idBranches = ?", [id]);
+    return result;
   },
+
+  getByBrandName: async (brandName) => {
+    const [rows] = await pool.query(
+      "SELECT * FROM Branches WHERE Brand = ?",
+      [brandName]
+    );
+    return rows;
+  }
 };
 
 module.exports = Branch;

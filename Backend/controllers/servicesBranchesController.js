@@ -35,3 +35,14 @@ exports.delete = (req, res) => {
     res.json({ message: 'Relación eliminada' });
   });
 };
+
+
+exports.getServicesByBranch = async (req, res) => {
+  try {
+    const branchId = req.params.branchId;
+    const data = await ServicesBranches.getServicesByBranch(branchId);
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
