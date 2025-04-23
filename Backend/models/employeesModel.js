@@ -20,6 +20,11 @@ const Employee = {
   delete: (id, callback) => {
     db.query("DELETE FROM Employees WHERE idEmployee = ?", [id], callback);
   },
+
+  getByBranch: (branchId, callback) => {
+    db.query('SELECT Name, Description FROM Employees WHERE idBranch = ?', [branchId], callback);
+  },
+
 };
 
 module.exports = Employee;

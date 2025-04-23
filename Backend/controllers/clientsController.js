@@ -212,3 +212,49 @@ exports.logout = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Obtener los puntos de un cliente
+exports.getEmoney = (req, res) => {
+  Client.getById(req.params.id, (err, results) => {
+    if (err) return res.status(500).json({ error: err });
+    if (results.length === 0) return res.status(404).json({ message: 'Cliente no encontrado' });
+
+    res.json({ Emoney: results[0].Emoney });
+  });
+};
+
+// Restar puntos
+exports.subtractPoints = (req, res) => {
+  const id = req.params.id;
+  const { points } = req.body;
+
+  Client.getById(id, (err, results) => {
+    if (err) return res.status(500).json({ error: err });
+    if (results.length === 0) return res.status(404).json({ message: 'Cliente no encontrado' });
+
+    const newBalance = results[0].Emoney - points;
+
+    Client.update(id, { ...results[0], Emoney: newBalance }, (err) => {
+      if (err) return res.status(500).json({ error: err });
+      res.json({ message: 'Puntos restados', newBalance });
+    });
+  });
+};
+
+// Sumar puntos
+exports.addPoints = (req, res) => {
+  const id = req.params.id;
+  const { points } = req.body;
+
+  Client.getById(id, (err, results) => {
+    if (err) return res.status(500).json({ error: err });
+    if (results.length === 0) return res.status(404).json({ message: 'Cliente no encontrado' });
+
+    const newBalance = results[0].Emoney + points;
+
+    Client.update(id, { ...results[0], Emoney: newBalance }, (err) => {
+      if (err) return res.status(500).json({ error: err });
+      res.json({ message: 'Puntos añadidos', newBalance });
+    });
+  });
+};
