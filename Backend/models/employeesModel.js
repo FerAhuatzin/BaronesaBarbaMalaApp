@@ -33,6 +33,12 @@ const Employee = {
     );
     return rows;
   }
+
+  getByBranch: (branchId, callback) => {
+    db.query('SELECT Name, Description FROM Employees WHERE idBranch = ?', [branchId], callback);
+  },
+
+
 };
 
 module.exports = Employee;

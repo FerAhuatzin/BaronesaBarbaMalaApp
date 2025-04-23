@@ -50,3 +50,12 @@ exports.getEmployeesByBranch = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getEmployeesByBranch = (req, res) => {
+  const branchId = req.params.branchId;
+  
+  Employee.getByBranch(branchId, (err, results) => {
+    if (err) return res.status(500).json({ error: err });
+    res.json(results);
+  });
+};
