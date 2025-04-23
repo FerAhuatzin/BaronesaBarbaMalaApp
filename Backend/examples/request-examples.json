@@ -1,0 +1,40 @@
+{
+  "examples": {
+    "login": {
+      "endpoint": "/api/clients/login",
+      "method": "POST",
+      "body": {
+        "Email": "juanH78@example.com",
+        "Password": "Contraseña1238"
+      }
+    },
+    "createClient": {
+      "endpoint": "/api/clients",
+      "method": "POST",
+      "body": {
+        "Name": "Juan Pérez",
+        "Email": "juan.perez@example.com",
+        "Password": "Cl4v3S3gur4!",
+        "Phone": "5551234567",
+        "EMoney": 0
+      }
+    },
+    "updateClient": {
+      "endpoint": "/api/clients/1",
+      "method": "PUT",
+      "body": {
+        "Name": "Juan Pérez Actualizado",
+        "Email": "juan.perez@example.com",
+        "Phone": "5559876543"
+      }
+    },
+    "getClient": {
+      "endpoint": "/api/clients/1",
+      "method": "GET"
+    },
+    "getAllClients": {
+      "endpoint": "/api/clients",
+      "method": "GET"
+    }
+  }
+} 
