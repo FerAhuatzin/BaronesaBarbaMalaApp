@@ -1,6 +1,6 @@
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { fontSizes } from "../../../constants/font-sizes";
 
 interface TimeSlot {
@@ -10,11 +10,11 @@ interface TimeSlot {
 
 interface DateAvailableHoursProps {
   availableHours: TimeSlot[];
+  selectedTime: string | null;
+  onSelectTime: (time: string) => void;
 }
 
-export default function DateAvailableHours({ availableHours }: DateAvailableHoursProps) {
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-
+export default function DateAvailableHours({ availableHours, selectedTime, onSelectTime }: DateAvailableHoursProps) {
   const groupedHours = React.useMemo(() => {
     const morning: TimeSlot[] = [];
     const afternoon: TimeSlot[] = [];
@@ -48,9 +48,9 @@ export default function DateAvailableHours({ availableHours }: DateAvailableHour
     return (
       <TouchableOpacity
         style={[styles.timeSlot, isSelected && styles.selectedTimeSlot]}
-        onPress={() => setSelectedTime(item.time)}
+        onPress={() => onSelectTime(item.time)}
       >
-        <Text style={[styles.timeText]}>
+        <Text style={[styles.timeText, isSelected && styles.selectedTimeText]}>
           {item.time}
         </Text>
       </TouchableOpacity>
@@ -75,7 +75,7 @@ export default function DateAvailableHours({ availableHours }: DateAvailableHour
                 styles.timeSlot, 
                 selectedTime === slot.time && styles.selectedTimeSlot
               ]}
-              onPress={() => setSelectedTime(slot.time)}
+              onPress={() => onSelectTime(slot.time)}
             >
               <Text 
                 style={[
@@ -132,14 +132,12 @@ const styles = StyleSheet.create({
   timeSectionTitle: {
     fontSize: fontSizes.body,
     marginBottom: 10,
-
   },
   timeGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   timeSlot: {
-
     padding: 12,
     borderRadius: 15,
     margin: 4,
@@ -161,23 +159,5 @@ const styles = StyleSheet.create({
     color: '#666666',
     textAlign: 'center',
     marginTop: 20,
-  },
-  selectedTimeContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    paddingTop: 15,
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-  },
-  selectedTimeLabel: {
-    fontSize: fontSizes.body,
-    marginRight: 5,
-    color: '#444444',
-  },
-  selectedTimeValue: {
-    fontSize: fontSizes.body,
-    color: '#333333',
-  },
+  }
 });

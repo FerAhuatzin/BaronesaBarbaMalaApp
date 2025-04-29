@@ -26,7 +26,8 @@ export default function ProfileLoggedIn({
   };
   
   return (
-    <ScrollView>
+    <ScrollView
+    >
       <View style={styles.container}>
         <Text style={commonStyles.subtitle}>
           Puntos: con cada cita atendida gana el 10% de su costo en puntos para

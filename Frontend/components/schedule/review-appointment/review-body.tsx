@@ -1,20 +1,10 @@
 import { fontSizes } from "@/constants/font-sizes";
 import { View, Text, StyleSheet } from "react-native";
 import ReviewDetail from "./review-detail";
-
+import { useAppointment } from "@/context/AppointmentContext";
 
 export default function ReviewBody() {
-    const appointmentData = {
-        branch: "Barba mala sucursal lomas",
-        service: "Corte y barba", 
-        barber: "Juan Pérez",
-        clientName: "Carlos Rodríguez",
-        date: "2023-07-28",
-        time: "16:00",
-        email: "carlos@ejemplo.com",
-        phone: "555-123-4567",
-        total: 280
-    };
+    const { appointmentData } = useAppointment();
 
     return (
         <View style={styles.container}>

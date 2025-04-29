@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { Service } from '@/types/service';
 import { mockServices } from './mock-data';
 import { fontSizes } from '../../../constants/font-sizes';
 import { ChevronUpIcon, ChevronDownIcon } from '../../../constants/Icons';
 import { commonStyles } from '../../../constants/commonStyles';
+import { useAppointment } from '@/context/AppointmentContext';
 
 interface ServiceOptionsProps {
   services: Service[];
@@ -18,6 +19,7 @@ export default function ServiceOptions({
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const { updateAppointmentData } = useAppointment();
 
   const servicesByType = services.reduce((acc, service) => {
     if (!acc[service.type]) {
@@ -26,6 +28,16 @@ export default function ServiceOptions({
     acc[service.type].push(service);
     return acc;
   }, {} as Record<string, Service[]>);
+
+  useEffect(() => {
+    const selectedServicesList = services.filter(service => selectedServices.includes(service.id));
+    const servicesNames = selectedServicesList.map(service => service.name).join(', ');
+    updateAppointmentData({
+      serviceIds: selectedServices,
+      service: servicesNames,
+      total: total
+    });
+  }, [selectedServices, total]);
 
   const handleSelectService = (service: Service) => {
     setSelectedServices(prev => {

@@ -1,11 +1,19 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "expo-router";
 import AppointmentConfirmationFooter from "../../components/schedule/appointment-confirmation/appointment-confirmation-footer";
-import { fontSizes } from "../../constants/font-sizes";
 import GeneralHeader from "../../components/general-header";
 import { commonStyles } from "../../constants/commonStyles";
+import { useAppointment } from "@/context/AppointmentContext";
 
-export default function AppontmentConfirmation() {
+export default function AppointmentConfirmation() {
+  const router = useRouter();
+  const { resetAppointmentData } = useAppointment();
+
+  useEffect(() => {
+    resetAppointmentData();
+  }, []);
+
   return (
     <View style={commonStyles.pageContainer}>
       <GeneralHeader />

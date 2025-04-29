@@ -19,8 +19,6 @@ export default function Schedule() {
   return (
     <View style={commonStyles.pageContainer}>
       <Stack.Screen options={{ header: () => <BranchSelectionHeader brandSelection={setBrand} /> }} />
-    
-      
       <FlatList
         data={filteredBranches}
         renderItem={({ item }) => <Branch branch={item} />}

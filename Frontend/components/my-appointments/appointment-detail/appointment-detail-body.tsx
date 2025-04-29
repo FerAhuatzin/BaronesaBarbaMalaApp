@@ -23,7 +23,7 @@ export default function AppointmentDetailBody({ appointment }: Props) {
             ? { uri: appointment.branchImage }
             : require("../../../assets/images/SplashImage.jpg")
         }
-        style={commonStyles.branchImage}
+        style={commonStyles.branchImageFull}
       />
       <View style={[commonStyles.row, styles.infoRow]}>
         <Text style={commonStyles.serviceText}>{appointment.service}</Text>

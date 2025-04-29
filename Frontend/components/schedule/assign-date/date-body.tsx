@@ -2,8 +2,9 @@ import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native";
 import DateCalendar from "./date-calendar";
 import DateAvailableHours from "./date-available-hours";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { commonStyles } from "../../../constants/commonStyles";
+import { useAppointment } from "@/context/AppointmentContext";
 
 interface TimeSlot {
   time: string;
@@ -12,18 +13,23 @@ interface TimeSlot {
 
 export default function DateBody() {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [availableHours, setAvailableHours] = useState<TimeSlot[]>([]);
+  const { updateAppointmentData, appointmentData } = useAppointment();
 
-  const busyHours: Record<string, string[]> = {
+  const busyHours = useMemo(() => ({
     '2025-05-01': ['11:00', '12:15', '15:30'],
     '2025-05-02': ['10:30', '13:45', '14:00'],
-  };
+  } as Record<string, string[]>), []);
 
-  useEffect(() => {
-    calculateAvailableHours(selectedDate);
-  }, [selectedDate]);
+  const formatDateToYYYYMMDD = useCallback((date: Date): string => {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }, []);
 
-  const calculateAvailableHours = (date: Date) => {
+  const calculateAvailableHours = useCallback((date: Date) => {
     const today = new Date();
     today.setHours(12, 0, 0, 0);
     
@@ -80,26 +86,52 @@ export default function DateBody() {
     }
     
     setAvailableHours(allTimeSlots);
-  };
+  }, [busyHours, formatDateToYYYYMMDD]);
 
-  const formatDateToYYYYMMDD = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
+  useEffect(() => {
+    calculateAvailableHours(selectedDate);
+  }, [selectedDate, calculateAvailableHours]);
+
+  useEffect(() => {
+    if (!appointmentData.date) {
+      setSelectedDate(new Date());
+      setSelectedTime(null);
+    }
+  }, [appointmentData.date]);
+
+  const handleDateSelection = useCallback((date: Date) => {
+    setSelectedDate(date);
+    setSelectedTime(null);
+  }, []);
+
+  const handleTimeSelection = useCallback((time: string) => {
+    setSelectedTime(time);
+    const formattedDate = formatDateToYYYYMMDD(selectedDate);
+    updateAppointmentData({
+      date: formattedDate,
+      time: time
+    });
+  }, [selectedDate, updateAppointmentData, formatDateToYYYYMMDD]);
+
+  const memoizedDateCalendar = useMemo(() => (
+    <DateCalendar 
+      selectedDate={selectedDate} 
+      onSelectDate={handleDateSelection} 
+    />
+  ), [selectedDate, handleDateSelection]);
+
+  const memoizedDateAvailableHours = useMemo(() => (
+    <DateAvailableHours 
+      availableHours={availableHours}
+      selectedTime={selectedTime}
+      onSelectTime={handleTimeSelection}
+    />
+  ), [availableHours, selectedTime, handleTimeSelection]);
 
   return (
     <ScrollView style={commonStyles.scrollContainer} showsVerticalScrollIndicator={false}>
-      <DateCalendar 
-        selectedDate={selectedDate} 
-        onSelectDate={(date) => {
-          setSelectedDate(date);
-        }} 
-      />
-      <DateAvailableHours 
-        availableHours={availableHours}
-      />
+      {memoizedDateCalendar}
+      {memoizedDateAvailableHours}
     </ScrollView>
   );
 }

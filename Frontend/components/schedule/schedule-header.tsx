@@ -1,22 +1,29 @@
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { CloseIcon } from "../../constants/Icons";
 import { colors } from "../../constants/colors";
 import { fontSizes } from "../../constants/font-sizes";
-import { commonStyles } from "../../constants/commonStyles";
-
+import { useEffect } from "react";
+import { useAppointment } from "@/context/AppointmentContext";
 interface props {
   progress: number;
   totalSteps: number;
 }
 
 export default function ScheduleHeader({ progress, totalSteps }: props) {
+  const { resetAppointmentData } = useAppointment();
   const router = useRouter();
   const currentStep = Math.floor(progress / (100 / totalSteps));
+
+  const handleExit = () => {
+    resetAppointmentData();
+    router.replace("/(tabs)");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.containerFlex}>
-        <TouchableOpacity onPress={() => router.replace("/(tabs)")}>
+        <TouchableOpacity onPress={handleExit}>
           <CloseIcon size={30} />
         </TouchableOpacity>
         <View style={styles.progressBarContainer}>

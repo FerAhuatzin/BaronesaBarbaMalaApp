@@ -40,7 +40,7 @@ export const commonStyles = StyleSheet.create({
     alignSelf: "center",
     borderWidth: 1,
     borderColor: "#E0E0E0",
-    shadowColor: "#000",
+    shadowColor: "black",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
@@ -211,8 +211,16 @@ export const commonStyles = StyleSheet.create({
 
   branchImage: {
     width: '100%',
+    height: 125,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+
+  branchImageFull: {
+    width: '100%',
     height: 150,
     borderRadius: 15,
+    marginBottom: 20,
   },
 
   // Contenedores con ancho estándar

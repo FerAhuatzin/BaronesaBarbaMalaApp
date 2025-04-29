@@ -1,10 +1,13 @@
 import { Stack } from "expo-router";
 import { AuthProvider } from "../context/auth-context";
+import { AppointmentProvider } from "../context/AppointmentContext";
 
 export default function Layout() {
   return (
     <AuthProvider>
-      <Stack screenOptions={{ headerShown: false }} />
+      <AppointmentProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </AppointmentProvider>
     </AuthProvider>
   );
 }
