@@ -24,19 +24,19 @@ require('./config/database');
 // Importar rutas
 const appointmentsRoutes = require('./routes/appointments');
 const branchesRoutes = require('./routes/branches');
+const personsRoutes = require('./routes/persons');
 const clientsRoutes = require('./routes/clients');
 const employeesRoutes = require('./routes/employees');
 const servicesRoutes = require('./routes/services');
-const branchesEmployeesRoutes = require('./routes/branchesEmployees');
 const servicesBranchesRoutes = require('./routes/servicesBranches');
 
 // Usar rutas
 app.use('/api/appointments', appointmentsRoutes);
 app.use('/api/branches', branchesRoutes);
+app.use('/api/persons', personsRoutes);
 app.use('/api/clients', clientsRoutes);
 app.use('/api/employees', employeesRoutes);
 app.use('/api/services', servicesRoutes);
-app.use('/api/branches-employees', branchesEmployeesRoutes);
 app.use('/api/services-branches', servicesBranchesRoutes);
 
 // Middleware para manejar rutas no encontradas

@@ -6,7 +6,8 @@ require("dotenv").config();
 const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS) || 10;
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || "1h";
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || "refresh_secret";
+const REFRESH_TOKEN_SECRET =
+  process.env.REFRESH_TOKEN_SECRET || "refresh_secret";
 const REFRESH_TOKEN_EXPIRES_IN = process.env.REFRESH_TOKEN_EXPIRES_IN || "7d";
 
 // Función para generar tokens
@@ -22,10 +23,48 @@ const generateTokens = (userId) => {
   return { accessToken, refreshToken };
 };
 
+exports.refreshToken = async (req, res) => {
+  try {
+    const { RefreshToken } = req.body;
+    
+    if (!RefreshToken) {
+      return res.status(401).json({ error: "Refresh token no proporcionado" });
+    }
+    
+    // Verificar el refresh token
+    let decoded;
+    try {
+      decoded = jwt.verify(RefreshToken, REFRESH_TOKEN_SECRET);
+    } catch (err) {
+      return res.status(401).json({ error: "Refresh token inválido o expirado" });
+    }
+    
+    // Buscar el cliente por el token de refresco
+    const client = await Client.findByRefreshToken(RefreshToken);
+    
+    if (!client) {
+      return res.status(401).json({ error: "Token no encontrado o revocado" });
+    }
+    
+    // Generar nuevos tokens
+    const { accessToken, refreshToken: newRefreshToken } = generateTokens(client.idPerson);
+    
+    // Actualizar el refresh token en la base de datos
+    await Client.update(client.idPerson, { RefreshToken: newRefreshToken });
+    
+    res.json({
+      accessToken,
+      refreshToken: newRefreshToken
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.getAllClients = async (req, res) => {
   try {
-    const data = await Client.getAll();
-    res.json(data);
+    const clients = await Client.getAll();
+    res.json(clients);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -34,13 +73,13 @@ exports.getAllClients = async (req, res) => {
 exports.getClientById = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await Client.getById(id);
+    const client = await Client.getById(id);
 
-    if (data.length === 0) {
+    if (!client) {
       return res.status(404).json({ message: "Cliente no encontrado" });
     }
 
-    res.json(data[0]);
+    res.json(client);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -48,28 +87,35 @@ exports.getClientById = async (req, res) => {
 
 exports.createClient = async (req, res) => {
   try {
-    const newClient = req.body;
+    // Separamos los datos de persona y cliente
+    const { Name, Email, Phone, Password, Emoney = 0 } = req.body;
 
-    const hashedPassword = await bcrypt.hash(newClient.Password, saltRounds);
-    newClient.Password = hashedPassword;
+    // Datos de persona
+    const personData = { Name, Email, Phone };
 
-    const result = await Client.create(newClient);
-    
+    // Datos de cliente (con contraseña hasheada)
+    const hashedPassword = await bcrypt.hash(Password, saltRounds);
+    const clientData = {
+      Password: hashedPassword,
+      Emoney,
+    };
+
+    // Crear el cliente (primero crea/actualiza la persona y luego el cliente)
+    const result = await Client.create(personData, clientData);
+
     // Generar tokens
-    const { accessToken, refreshToken } = generateTokens(result.insertId);
-    
+    const { accessToken, refreshToken } = generateTokens(result.idPerson);
+
     // Guardar refresh token en la base de datos
-    await Client.saveRefreshToken(result.insertId, refreshToken);
-    
-    const { Password, ...clientWithoutPassword } = newClient;
-    res
-      .status(201)
-      .json({ 
-        id: result.insertId, 
-        ...clientWithoutPassword, 
-        accessToken, 
-        refreshToken 
-      });
+    await Client.update(result.idPerson, { RefreshToken: refreshToken });
+
+    // Respuesta sin incluir la contraseña
+    res.status(201).json({
+      idPerson: result.idPerson,
+      ...personData,
+      accessToken,
+      refreshToken,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -77,20 +123,42 @@ exports.createClient = async (req, res) => {
 
 exports.updateClient = async (req, res) => {
   try {
-    const id = req.params.id;
-    const updatedClient = req.body;
+    const idPerson = req.params.id;
 
-    if (updatedClient.Password) {
-      updatedClient.Password = await bcrypt.hash(
-        updatedClient.Password,
-        saltRounds
-      );
+    // Separamos los datos de persona y cliente
+    const { Name, Email, Phone, Password, Emoney } = req.body;
+
+    // Datos de persona para actualizar
+    const personData = {};
+    if (Name) personData.Name = Name;
+    if (Email) personData.Email = Email;
+    if (Phone) personData.Phone = Phone;
+
+    // Datos de cliente para actualizar
+    const clientData = {};
+    if (Password) {
+      clientData.Password = await bcrypt.hash(Password, saltRounds);
+    }
+    if (Emoney !== undefined) {
+      clientData.Emoney = Emoney;
     }
 
-    await Client.update(id, updatedClient);
+    // Verificar si existe el cliente
+    const existingClient = await Client.getById(idPerson);
+    if (!existingClient) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
 
-    const { Password, ...clientWithoutPassword } = updatedClient;
-    res.json({ id, ...clientWithoutPassword });
+    // Actualizar el cliente
+    await Client.update(idPerson, clientData, personData);
+
+    // Obtener el cliente actualizado
+    const updatedClient = await Client.getById(idPerson);
+
+    // Eliminamos datos sensibles antes de enviar la respuesta
+    const { Password: _, RefreshToken: __, ...safeClientData } = updatedClient;
+
+    res.json(safeClientData);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -98,8 +166,16 @@ exports.updateClient = async (req, res) => {
 
 exports.deleteClient = async (req, res) => {
   try {
-    const id = req.params.id;
-    await Client.delete(id);
+    const idPerson = req.params.id;
+
+    // Verificar si existe el cliente
+    const existingClient = await Client.getById(idPerson);
+    if (!existingClient) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
+
+    // Eliminar cliente (manteniendo la persona)
+    await Client.delete(idPerson);
     res.json({ message: "Cliente eliminado exitosamente" });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -116,95 +192,52 @@ exports.login = async (req, res) => {
         .json({ error: "Email y contraseña son requeridos" });
     }
     
-    const clients = await Client.findByEmail(Email);
+    const client = await Client.findByEmail(Email);
     
-    if (clients.length === 0) {
+    if (!client) {
       return res.status(401).json({ error: "Credenciales inválidas" });
     }
     
-    const client = clients[0];
-    
     const isMatch = await bcrypt.compare(Password, client.Password);
     
-    if (isMatch) {
-      const { Password, ...clientWithoutPassword } = client;
-      
-      // Generar tokens
-      const { accessToken, refreshToken } = generateTokens(client.idClient);
-      
-      // Guardar refresh token en la base de datos
-      await Client.saveRefreshToken(client.idClient, refreshToken);
-      
-      res.json({
-        message: "Inicio de sesión exitoso",
-        user: clientWithoutPassword,
-        accessToken,
-        refreshToken
-      });
-    } else {
-      res.status(401).json({ error: "Credenciales inválidas" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-exports.refreshToken = async (req, res) => {
-  try {
-    const { refreshToken } = req.body;
-    
-    if (!refreshToken) {
-      return res.status(401).json({ error: "Refresh token no proporcionado" });
+    if (!isMatch) {
+      return res.status(401).json({ error: "Contraseña inválida" });
     }
     
-    // Verificar el refresh token
-    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
+    // Generar tokens
+    const { accessToken, refreshToken } = generateTokens(client.idPerson);
     
-    // Buscar el cliente por el ID decodificado
-    const clientId = decoded.id;
-    const clients = await Client.getById(clientId);
+    // Guardar refresh token en la base de datos
+    await Client.update(client.idPerson, { RefreshToken: refreshToken });
     
-    if (clients.length === 0) {
-      return res.status(401).json({ error: "Cliente no encontrado" });
-    }
-    
-    // Verificar que el refresh token almacenado coincida con el proporcionado
-    const client = clients[0];
-    
-    // Generar nuevos tokens
-    const { accessToken, refreshToken: newRefreshToken } = generateTokens(clientId);
-    
-    // Actualizar el refresh token en la base de datos
-    await Client.saveRefreshToken(clientId, newRefreshToken);
+    // Eliminar datos sensibles
+    const { Password: _, RefreshToken: __, ...safeClientData } = client;
     
     res.json({
+      message: "Inicio de sesión exitoso",
+      user: safeClientData,
       accessToken,
-      refreshToken: newRefreshToken
+      refreshToken
     });
   } catch (error) {
-    if (error.name === "JsonWebTokenError" || error.name === "TokenExpiredError") {
-      return res.status(401).json({ error: "Refresh token inválido o expirado" });
-    }
     res.status(500).json({ error: error.message });
   }
 };
 
 exports.logout = async (req, res) => {
   try {
-    const { refreshToken } = req.body;
+    const refreshToken = req.headers.authorization;
     
     if (!refreshToken) {
       return res.status(400).json({ error: "Refresh token no proporcionado" });
     }
     
-    try {
-      // Verificar el refresh token para obtener el ID del cliente
-      const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
-      
+    // Buscar el cliente por el token
+    const client = await Client.findByRefreshToken(refreshToken);
+    
+    if (client) {
       // Revocar el refresh token
-      await Client.revokeRefreshToken(decoded.id);
-    } catch (error) {
-      // Ignorar errores de verificación - solo queremos asegurarnos de revocar el token si es válido
+      await Client.revokeRefreshToken(client.idPerson);
     }
     
     res.json({ message: "Sesión cerrada exitosamente" });
@@ -213,12 +246,45 @@ exports.logout = async (req, res) => {
   }
 };
 
+exports.getEmoney = async (req, res) => {
+  try {
+    const idPerson = req.params.id;
+    const client = await Client.getById(idPerson);
+    
+    if (!client) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
+    
+    res.json({ Emoney: client.Emoney || 0 });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.addPoints = async (req, res) => {
   try {
-    const { id } = req.params;
+    const idPerson = req.params.id;
     const { Emoney } = req.body;
-    await Client.addPoints(id, Emoney);
-    res.json({ message: `Se agregaron ${Emoney} puntos al cliente ${id}`});
+    
+    if (!Emoney || isNaN(Emoney) || Emoney <= 0) {
+      return res.status(400).json({ error: "Cantidad de puntos inválida" });
+    }
+    
+    // Verificar si existe el cliente
+    const existingClient = await Client.getById(idPerson);
+    if (!existingClient) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
+    
+    await Client.addPoints(idPerson, Emoney);
+    
+    // Obtener el saldo actualizado
+    const updatedClient = await Client.getById(idPerson);
+    
+    res.json({ 
+      message: `Se agregaron ${Emoney} puntos al cliente`, 
+      newBalance: updatedClient.Emoney 
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -226,57 +292,39 @@ exports.addPoints = async (req, res) => {
 
 exports.removePoints = async (req, res) => {
   try {
-    const { id } = req.params;
+    const idPerson = req.params.id;
     const { Emoney } = req.body;
-    await Client.removePoints(id, Emoney);
-    res.json({ message: `Se restaron ${Emoney} puntos al cliente ${id}` });
+    
+    if (!Emoney || isNaN(Emoney) || Emoney <= 0) {
+      return res.status(400).json({ error: "Cantidad de puntos inválida" });
+    }
+    
+    // Verificar si existe el cliente
+    const existingClient = await Client.getById(idPerson);
+    if (!existingClient) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
+    
+    // Verificar si tiene suficientes puntos
+    if (existingClient.Emoney < Emoney) {
+      return res.status(400).json({ 
+        error: "Saldo insuficiente", 
+        currentBalance: existingClient.Emoney 
+      });
+    }
+    
+    await Client.removePoints(idPerson, Emoney);
+    
+    // Obtener el saldo actualizado
+    const updatedClient = await Client.getById(idPerson);
+    
+    res.json({ 
+      message: `Se restaron ${Emoney} puntos al cliente`, 
+      newBalance: updatedClient.Emoney 
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-=======
-// Obtener los puntos de un cliente
-exports.getEmoney = (req, res) => {
-  Client.getById(req.params.id, (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-    if (results.length === 0) return res.status(404).json({ message: 'Cliente no encontrado' });
 
-    res.json({ Emoney: results[0].Emoney });
-  });
-};
 
-// Restar puntos
-exports.subtractPoints = (req, res) => {
-  const id = req.params.id;
-  const { points } = req.body;
-
-  Client.getById(id, (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-    if (results.length === 0) return res.status(404).json({ message: 'Cliente no encontrado' });
-
-    const newBalance = results[0].Emoney - points;
-
-    Client.update(id, { ...results[0], Emoney: newBalance }, (err) => {
-      if (err) return res.status(500).json({ error: err });
-      res.json({ message: 'Puntos restados', newBalance });
-    });
-  });
-};
-
-// Sumar puntos
-exports.addPoints = (req, res) => {
-  const id = req.params.id;
-  const { points } = req.body;
-
-  Client.getById(id, (err, results) => {
-    if (err) return res.status(500).json({ error: err });
-    if (results.length === 0) return res.status(404).json({ message: 'Cliente no encontrado' });
-
-    const newBalance = results[0].Emoney + points;
-
-    Client.update(id, { ...results[0], Emoney: newBalance }, (err) => {
-      if (err) return res.status(500).json({ error: err });
-      res.json({ message: 'Puntos añadidos', newBalance });
-    });
-  });
-};
