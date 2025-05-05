@@ -32,9 +32,9 @@ const Employee = {
       [branchId]
     );
     return rows;
-  }
+  },
 
-  getByBranch: (branchId, callback) => {
+  getByBranch: async (branchId, callback) => {
     db.query('SELECT Name, Description FROM Employees WHERE idBranch = ?', [branchId], callback);
   },
 

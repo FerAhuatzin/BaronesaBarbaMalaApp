@@ -8,7 +8,7 @@ const auth = (req, res, next) => {
     // Obtener el token del header Authorization
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Acceso denegado. Token no proporcionado' });
+      return res.status(401).json({ error: 'Acceso denegado. Token no proporcionado falta Bearer' });
     }
     
     const token = authHeader.split(' ')[1];
